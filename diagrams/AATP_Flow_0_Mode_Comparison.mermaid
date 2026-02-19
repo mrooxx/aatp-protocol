@@ -1,0 +1,90 @@
+graph LR
+    classDef header fill:#1B2A4A,stroke:#1B2A4A,color:#fff,font-weight:bold
+    classDef solo fill:#E3F2FD,stroke:#1976D2,color:#333
+    classDef uni fill:#FFF3E0,stroke:#E65100,color:#333
+    classDef bi fill:#E8F5E9,stroke:#2E7D32,color:#333
+    classDef na fill:#FFEBEE,stroke:#C62828,color:#999
+
+    subgraph COMPARISON["AATP: Three Operating Modes Comparison"]
+        direction TB
+        
+        subgraph H[""]
+            direction LR
+            H1[" "]:::header
+            H2["SOLO"]:::header
+            H3["UNILATERAL"]:::header
+            H4["BILATERAL"]:::header
+        end
+
+        subgraph R1["Participants"]
+            direction LR
+            R1H["Agents involved"]:::header
+            R1S["1 agent\nno counterparty"]:::solo
+            R1U["1 AATP agent +\n1 non-AATP agent"]:::uni
+            R1B["2 AATP agents"]:::bi
+        end
+
+        subgraph R2["Audit Records"]
+            direction LR
+            R2H["Who generates records"]:::header
+            R2S["Agent only"]:::solo
+            R2U["AATP agent only"]:::uni
+            R2B["Both agents"]:::bi
+        end
+
+        subgraph R3["Hash Chain"]
+            direction LR
+            R3H["Chain integrity"]:::header
+            R3S["✓ Single chain"]:::solo
+            R3U["✓ Single chain"]:::uni
+            R3B["✓ Dual chains"]:::bi
+        end
+
+        subgraph R4["Cross-Reference"]
+            direction LR
+            R4H["counterpartyLastSeq"]:::header
+            R4S["✗ N/A"]:::na
+            R4U["✗ Not available"]:::na
+            R4B["✓ Full"]:::bi
+        end
+
+        subgraph R5["Omission Detection"]
+            direction LR
+            R5H["Can detect missing records"]:::header
+            R5S["✗ Only via\nperiodic summaries\n+ external triggers"]:::na
+            R5U["✗ Only via\nMerkle anchoring"]:::na
+            R5B["✓ Cross-reference\n+ Merkle anchoring"]:::bi
+        end
+
+        subgraph R6["Language Negotiation"]
+            direction LR
+            R6H["Audit language"]:::header
+            R6S["Agent's default"]:::solo
+            R6U["Agent's default"]:::uni
+            R6B["Negotiated\n(seller priority)"]:::bi
+        end
+
+        subgraph R7["Level 3 Review"]
+            direction LR
+            R7H["Reasonableness audit"]:::header
+            R7S["Agent's perspective\nonly"]:::solo
+            R7U["AATP agent's\nperspective only"]:::uni
+            R7B["Both perspectives\navailable"]:::bi
+        end
+
+        subgraph R8["Adoption Requirement"]
+            direction LR
+            R8H["What's needed"]:::header
+            R8S["1 agent +\n1 principal"]:::solo
+            R8U["1 AATP agent +\nany counterparty"]:::uni
+            R8B["Both parties\nadopt AATP"]:::bi
+        end
+
+        subgraph R9["Primary Value"]
+            direction LR
+            R9H["Main benefit"]:::header
+            R9S["Internal oversight\nof solo decisions"]:::solo
+            R9U["One-sided\ntransaction audit"]:::uni
+            R9B["Full bilateral\naccountability"]:::bi
+        end
+    end

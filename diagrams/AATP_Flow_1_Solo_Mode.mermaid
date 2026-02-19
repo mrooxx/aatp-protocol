@@ -1,0 +1,131 @@
+graph TB
+    %% ============ STYLING ============
+    classDef principal fill:#1B2A4A,stroke:#1B2A4A,color:#fff,font-weight:bold
+    classDef agent fill:#2C4A7C,stroke:#2C4A7C,color:#fff
+    classDef middleware fill:#3D6098,stroke:#3D6098,color:#fff
+    classDef auditor fill:#4A7A3D,stroke:#4A7A3D,color:#fff
+    classDef data fill:#FFF3CD,stroke:#D4A843,color:#333
+    classDef chain fill:#F8D7DA,stroke:#C0392B,color:#333
+    classDef external fill:#D5E8D4,stroke:#82B366,color:#333
+    classDef phase fill:#E8E8E8,stroke:#999,color:#333,font-weight:bold
+
+    %% ============ PHASE 0: SETUP ============
+    subgraph P0["PHASE 0: SETUP (one-time)"]
+        direction TB
+        PRINCIPAL_0["👤 Principal"]:::principal
+        AUTH_VC["Authorization VC\n(scope, limits, expiry,\naudit language)"]:::data
+        AGENT_CONFIG["Agent Configuration\n(instructions, preferences,\nbatch thresholds)"]:::data
+        AUDITOR_CRED["Auditor Credential VC\n(scope, time range, level)"]:::data
+        AUDIT_PREFS["Audit Preferences\n(scoring criteria,\nalert thresholds)"]:::data
+        
+        AGENT_0["🤖 Agent"]:::agent
+        AUDITOR_0["🔍 Auditor"]:::auditor
+        
+        PRINCIPAL_0 -->|"issues"| AUTH_VC
+        PRINCIPAL_0 -->|"configures"| AGENT_CONFIG
+        AUTH_VC -->|"grants authority"| AGENT_0
+        AGENT_CONFIG -->|"guides behavior"| AGENT_0
+        
+        PRINCIPAL_0 -->|"issues"| AUDITOR_CRED
+        PRINCIPAL_0 -->|"sets"| AUDIT_PREFS
+        AUDITOR_CRED -->|"grants access"| AUDITOR_0
+        AUDIT_PREFS -->|"defines criteria"| AUDITOR_0
+    end
+
+    %% ============ PHASE 1: DECISION ============
+    subgraph P1["PHASE 1: SOLO DECISION"]
+        direction TB
+        TRIGGER["Trigger Event\n(schedule, condition,\nexternal signal)"]:::external
+        
+        DECISION_ENGINE["🧠 Decision Engine\n(LLM)"]:::agent
+        EXT_DATA["External Data\n(market prices, usage stats,\nservice status)"]:::external
+        
+        MW["⚙️ AATP Middleware\n(deterministic)"]:::middleware
+        
+        RECORD_INIT["Audit Record:\nSession Initiation\n(solo session)"]:::data
+        RECORD_DECISION["Audit Record:\nDecision + Reasoning\n(narrative + structuredData)"]:::data
+        RECORD_TERM["Audit Record:\nSession Termination\n(outcome summary)"]:::data
+        
+        CHAIN["🔗 Agent Hash Chain\n(append, sign, link)"]:::chain
+        
+        TRIGGER -->|"activates"| DECISION_ENGINE
+        EXT_DATA -->|"informs"| DECISION_ENGINE
+        
+        DECISION_ENGINE -->|"decision made"| MW
+        
+        MW -->|"generates"| RECORD_INIT
+        MW -->|"generates"| RECORD_DECISION
+        MW -->|"generates"| RECORD_TERM
+        
+        RECORD_INIT -->|"hash + sign + append"| CHAIN
+        RECORD_DECISION -->|"hash + sign + append"| CHAIN
+        RECORD_TERM -->|"hash + sign + append"| CHAIN
+    end
+
+    %% ============ PHASE 2: ACTION ============
+    subgraph P2["PHASE 2: EXECUTION (if applicable)"]
+        direction TB
+        ACTION["Action Executed\n(payment, renewal,\ncancellation, notification)"]:::external
+        ACTION_CONFIRM["External Confirmation\n(tx hash, receipt,\nstatus change)"]:::external
+        
+        MW2["⚙️ AATP Middleware"]:::middleware
+        RECORD_ACTION["Audit Record:\nAction Confirmation\n(references external proof)"]:::data
+        CHAIN2["🔗 Agent Hash Chain"]:::chain
+        
+        ACTION -->|"executed"| ACTION_CONFIRM
+        ACTION_CONFIRM -->|"observed"| MW2
+        MW2 -->|"generates"| RECORD_ACTION
+        RECORD_ACTION -->|"hash + sign + append"| CHAIN2
+    end
+
+    %% ============ MERKLE ============
+    subgraph ANCHOR["PERIODIC: Merkle Anchoring"]
+        direction TB
+        CHAIN3["🔗 Agent Hash Chain"]:::chain
+        MERKLE["Merkle Root\ncomputation"]:::middleware
+        EXT_ANCHOR["External Anchor\n(blockchain / TSA)"]:::external
+        
+        CHAIN3 -->|"batch of records"| MERKLE
+        MERKLE -->|"publish root"| EXT_ANCHOR
+    end
+
+    %% ============ PHASE 3: AUDIT ============
+    subgraph P3["PHASE 3: AUDIT (later, possibly much later)"]
+        direction TB
+        CHAIN4["🔗 Agent Hash Chain"]:::chain
+        ANCHOR2["External Anchors"]:::external
+        AUTH_VC2["Authorization VC\n(for compliance check)"]:::data
+        
+        AUDITOR_3["🔍 Auditor"]:::auditor
+        
+        L1["Level 1: Integrity\n✓ chain valid?\n✓ signatures valid?\n✓ anchors match?"]:::auditor
+        L2["Level 2: Compliance\n✓ within auth scope?\n✓ narrative ↔ structuredData?\n✓ external evidence matches?"]:::auditor
+        L3["Level 3: Reasonableness\n✓ decision quality?\n✓ alternatives considered?\n✓ patterns over time?"]:::auditor
+        
+        REPORT["Audit Report\n(findings, scores,\nalerts)"]:::data
+        PRINCIPAL_3["👤 Principal"]:::principal
+        FEEDBACK["Updated Authorization\nor Instructions"]:::data
+        
+        CHAIN4 -->|"read"| AUDITOR_3
+        ANCHOR2 -->|"verify"| AUDITOR_3
+        AUTH_VC2 -->|"check against"| AUDITOR_3
+        
+        AUDITOR_3 --> L1
+        AUDITOR_3 --> L2
+        AUDITOR_3 --> L3
+        
+        L1 -->|"results"| REPORT
+        L2 -->|"results"| REPORT
+        L3 -->|"results"| REPORT
+        
+        REPORT -->|"delivered to"| PRINCIPAL_3
+        PRINCIPAL_3 -->|"decides"| FEEDBACK
+    end
+
+    %% ============ CROSS-PHASE LINKS ============
+    P0 -.->|"agent deployed\nwith authorization"| P1
+    P1 -.->|"decision triggers\naction"| P2
+    P1 -.->|"records accumulate"| ANCHOR
+    P2 -.->|"records accumulate"| ANCHOR
+    ANCHOR -.->|"anchors available\nfor verification"| P3
+    P3 -.->|"feedback loop:\nupdated authorization"| P0

@@ -1,0 +1,100 @@
+graph TB
+    classDef ai fill:#2C4A7C,stroke:#2C4A7C,color:#fff
+    classDef recorder fill:#1B6B3A,stroke:#1B6B3A,color:#fff,font-weight:bold
+    classDef reviewer fill:#8B4513,stroke:#8B4513,color:#fff,font-weight:bold
+    classDef data fill:#FFF3CD,stroke:#D4A843,color:#333
+    classDef chain fill:#E3F2FD,stroke:#1976D2,color:#333
+    classDef external fill:#D5E8D4,stroke:#82B366,color:#333
+    classDef human fill:#1B2A4A,stroke:#1B2A4A,color:#fff,font-weight:bold
+    classDef mcp fill:#F3E5F5,stroke:#7B1FA2,color:#333
+
+    %% ============ THE TWO MODULES ============
+    subgraph SYSTEM["AATP: Two Modules"]
+        direction TB
+
+        subgraph MOD1["MODULE 1: RECORDER (会计师)"]
+            direction TB
+            M1_DESC["MCP Tool Server\nAny AI can call these tools:"]:::mcp
+            
+            T1["🔧 aatp.startSession\n\nInput: purpose, authScope,\ncounterparty (or 'solo'),\nauditLanguage\n\nOutput: sessionId,\ninitiation record"]:::recorder
+            
+            T2["🔧 aatp.recordDecision\n\nInput: sessionId,\nauditPointType,\nwhatIDecided,\nwhyIDecidedThis,\nalternativesConsidered,\nstructuredData,\ncounterpartyInput (optional)\n\nOutput: recordId,\nsigned record"]:::recorder
+            
+            T3["🔧 aatp.endSession\n\nInput: sessionId,\noutcomeSummary,\ntotalValue\n\nOutput: termination record,\nsession digest"]:::recorder
+            
+            ENGINE["Internal Engine:\n• JSON construction\n• SHA-256 hashing (RFC 8785)\n• Ed25519 signing\n• Hash chain management\n• Merkle tree computation\n• Storage to configured location"]:::recorder
+            
+            T1 --> ENGINE
+            T2 --> ENGINE
+            T3 --> ENGINE
+        end
+
+        subgraph MOD2["MODULE 2: REVIEWER (审计师)"]
+            direction TB
+            M2_DESC["MCP Tool Server\nAudit AI calls these tools:"]:::mcp
+            
+            T4["🔧 aatp.verifyChain\n\nInput: agentId,\ntimeRange (optional)\n\nOutput: L1 integrity result\n(chain valid, sigs valid,\nanchors checked)"]:::reviewer
+            
+            T5["🔧 aatp.checkCompliance\n\nInput: sessionId,\nauthorizationVC\n\nOutput: L2 compliance result\n(within scope, limits ok,\nnarrative↔data consistent)"]:::reviewer
+            
+            T6["🔧 aatp.getSessionForReview\n\nInput: sessionId\n\nOutput: all records in session,\nformatted for AI reading\nwith consistency annotations"]:::reviewer
+            
+            T7["🔧 aatp.submitReview\n\nInput: sessionId,\nreasonablenessScore (0-100),\nfindings, recommendations\n\nOutput: stored review record"]:::reviewer
+            
+            ENGINE2["Internal Engine:\n• Hash chain walker\n• Signature verifier\n• Merkle proof checker\n• Authorization VC parser\n• Narrative↔structuredData\n  consistency checker\n• Review record storage"]:::reviewer
+            
+            T4 --> ENGINE2
+            T5 --> ENGINE2
+            T6 --> ENGINE2
+            T7 --> ENGINE2
+        end
+    end
+
+    %% ============ HOW AI USES RECORDER ============
+    subgraph USAGE_R["HOW AN AI USES THE RECORDER"]
+        direction TB
+        AI_DECISION["🤖 Any AI\n(Claude, GPT, local model)\nmaking a decision"]:::ai
+        
+        STEP1["1. AI is about to\nmake a decision"]:::data
+        STEP2["2. AI calls\naatp.startSession()"]:::data
+        STEP3["3. AI makes decision,\nthen calls\naatp.recordDecision()\nwith what+why+data"]:::data
+        STEP4["4. If action needed,\nAI executes action,\nthen calls\naatp.recordDecision()\nwith confirmation"]:::data
+        STEP5["5. AI calls\naatp.endSession()"]:::data
+        
+        AI_DECISION --> STEP1 --> STEP2 --> STEP3 --> STEP4 --> STEP5
+    end
+
+    %% ============ HOW AI USES REVIEWER ============
+    subgraph USAGE_A["HOW AN AUDIT AI USES THE REVIEWER"]
+        direction TB
+        AI_AUDIT["🔍 Audit AI\n(independent service)"]:::ai
+        
+        STEPA["1. Calls\naatp.verifyChain()\n→ L1 pass/fail"]:::data
+        STEPB["2. Calls\naatp.checkCompliance()\n→ L2 findings"]:::data
+        STEPC["3. Calls\naatp.getSessionForReview()\n→ reads all records"]:::data
+        STEPD["4. AI evaluates\nreasonableness\n(its own judgment)"]:::data
+        STEPE["5. Calls\naatp.submitReview()\n→ stores findings"]:::data
+        
+        AI_AUDIT --> STEPA --> STEPB --> STEPC --> STEPD --> STEPE
+    end
+
+    %% ============ STORAGE ============
+    subgraph STORAGE["STORAGE (configurable)"]
+        direction LR
+        LOCAL["Local files\n(SQLite / JSON)"]:::chain
+        REMOTE["Remote endpoint\n(API / cloud)"]:::chain
+        ANCHOR["Blockchain / TSA\n(Merkle anchors)"]:::external
+    end
+
+    %% ============ CONNECTIONS ============
+    MOD1 -->|"writes records"| STORAGE
+    MOD2 -->|"reads records"| STORAGE
+    
+    USAGE_R -.->|"calls tools via MCP"| MOD1
+    USAGE_A -.->|"calls tools via MCP"| MOD2
+
+    %% ============ PRINCIPAL ============
+    PRINCIPAL["👤 Principal\n(human owner)\n\nReads audit reports\nUpdates authorization\nChooses audit service"]:::human
+    
+    MOD2 -->|"audit reports"| PRINCIPAL
+    PRINCIPAL -->|"authorization VC +\nconfiguration"| MOD1

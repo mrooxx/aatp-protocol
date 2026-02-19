@@ -1,0 +1,200 @@
+graph TB
+    %% ============ STYLING ============
+    classDef principalA fill:#1B2A4A,stroke:#1B2A4A,color:#fff,font-weight:bold
+    classDef principalB fill:#4A1B2A,stroke:#4A1B2A,color:#fff,font-weight:bold
+    classDef agentA fill:#2C4A7C,stroke:#2C4A7C,color:#fff
+    classDef agentB fill:#7C2C4A,stroke:#7C2C4A,color:#fff
+    classDef mwA fill:#3D6098,stroke:#3D6098,color:#fff
+    classDef mwB fill:#98603D,stroke:#98603D,color:#fff
+    classDef auditor fill:#4A7A3D,stroke:#4A7A3D,color:#fff
+    classDef data fill:#FFF3CD,stroke:#D4A843,color:#333
+    classDef dataB fill:#FCE4EC,stroke:#C0392B,color:#333
+    classDef chainA fill:#BBDEFB,stroke:#1976D2,color:#333
+    classDef chainB fill:#F8D7DA,stroke:#C0392B,color:#333
+    classDef external fill:#D5E8D4,stroke:#82B366,color:#333
+    classDef crossref fill:#E1BEE7,stroke:#8E24AA,color:#333
+
+    %% ============ PHASE 0: SETUP (BOTH SIDES) ============
+    subgraph P0["PHASE 0: SETUP (both parties)"]
+        direction TB
+        
+        subgraph P0A["Principal A Side"]
+            PA["👤 Principal A"]:::principalA
+            AUTH_A["Auth VC A\n(scope, limits)"]:::data
+            ACRED_A["Auditor Credential A"]:::data
+            AGENT_A0["🤖 Agent A"]:::agentA
+            PA -->|"issues"| AUTH_A --> AGENT_A0
+            PA -->|"issues"| ACRED_A
+        end
+        
+        subgraph P0B["Principal B Side"]
+            PB["👤 Principal B"]:::principalB
+            AUTH_B["Auth VC B\n(scope, limits)"]:::dataB
+            ACRED_B["Auditor Credential B"]:::dataB
+            AGENT_B0["🤖 Agent B"]:::agentB
+            PB -->|"issues"| AUTH_B --> AGENT_B0
+            PB -->|"issues"| ACRED_B
+        end
+        
+        AUDITOR_0["🔍 Auditor(s)"]:::auditor
+        ACRED_A --> AUDITOR_0
+        ACRED_B --> AUDITOR_0
+    end
+
+    %% ============ DISCOVERY ============
+    subgraph DISC["PRE-SESSION: Discovery & Negotiation"]
+        direction LR
+        CARD_A["Agent Card A\n(AATP v0.4,\nlanguages: en/zh)"]:::data
+        CARD_B["Agent Card B\n(AATP v0.4,\nlanguages: en/ja)"]:::dataB
+        
+        NEGO["Language & Version\nNegotiation\n→ Agreed: en, v0.4"]:::crossref
+        
+        CARD_A --> NEGO
+        CARD_B --> NEGO
+    end
+
+    %% ============ PHASE 1: SESSION ============
+    subgraph P1["PHASE 1: SESSION & NEGOTIATION"]
+        direction TB
+        
+        subgraph L1_COMM["Layer 1: A2A Communication"]
+            direction LR
+            AA1["🤖 Agent A\n(Initiator)"]:::agentA
+            AB1["🤖 Agent B\n(Responder)"]:::agentB
+            AA1 <-->|"A2A messages"| AB1
+        end
+
+        subgraph L2_AUDIT["Layer 2: Dual Audit Trails"]
+            direction TB
+            
+            subgraph L2A["Agent A Audit"]
+                MW_A["⚙️ A's Middleware"]:::mwA
+                RA1["A's Record 1:\nInitiation\n(seq: 1)"]:::data
+                RA2["A's Record 2:\nCounter-Proposal\n(seq: 2,\ncounterpartyLastSeq: 1)"]:::data
+                RA3["A's Record 3:\nAcceptance\n(seq: 3,\ncounterpartyLastSeq: 2)"]:::data
+                CHAIN_A["🔗 Agent A Chain"]:::chainA
+                
+                MW_A --> RA1 --> CHAIN_A
+                MW_A --> RA2 --> CHAIN_A
+                MW_A --> RA3 --> CHAIN_A
+            end
+            
+            subgraph L2B["Agent B Audit"]
+                MW_B["⚙️ B's Middleware"]:::mwB
+                RB1["B's Record 1:\nProposal\n(seq: 1)"]:::dataB
+                RB2["B's Record 2:\nAcceptance\n(seq: 2,\ncounterpartyLastSeq: 2)"]:::dataB
+                CHAIN_B["🔗 Agent B Chain"]:::chainB
+                
+                MW_B --> RB1 --> CHAIN_B
+                MW_B --> RB2 --> CHAIN_B
+            end
+        end
+
+        subgraph XREF["Cross-Reference Mechanism"]
+            direction TB
+            XREF_NOTE["A's record 2 says:\ncounterpartyLastSeq: 1\n→ A has seen B's record 1\n\nB's record 2 says:\ncounterpartyLastSeq: 2\n→ B has seen A's record 2\n\n✓ No gaps detectable"]:::crossref
+        end
+        
+        L1_COMM -.->|"messages observed\nby both middlewares"| L2_AUDIT
+        L2A <-.->|"records exchanged\n(via A2A DataPart\nor audit endpoint)"| L2B
+        L2_AUDIT -.-> XREF
+    end
+
+    %% ============ PHASE 2: SETTLEMENT ============
+    subgraph P2["PHASE 2: SETTLEMENT"]
+        direction TB
+        
+        MW_A2["⚙️ A's MW"]:::mwA
+        MW_B2["⚙️ B's MW"]:::mwB
+        PAY["Payment Protocol"]:::external
+        
+        RA_PAY["A: Payment Init\n+ Payment Confirm"]:::data
+        RB_PAY["B: Payment Confirm\n(delivery + receipt)"]:::dataB
+        
+        CHAIN_A2["🔗 A's Chain"]:::chainA
+        CHAIN_B2["🔗 B's Chain"]:::chainB
+        
+        RA_TERM["A: Termination\n(outcome summary)"]:::data
+        RB_TERM["B: Termination\n(outcome summary)"]:::dataB
+        
+        MW_A2 --> RA_PAY --> CHAIN_A2
+        MW_B2 --> RB_PAY --> CHAIN_B2
+        PAY -->|"tx confirmation"| MW_A2
+        PAY -->|"tx confirmation"| MW_B2
+        
+        MW_A2 --> RA_TERM --> CHAIN_A2
+        MW_B2 --> RB_TERM --> CHAIN_B2
+    end
+
+    %% ============ MERKLE ============
+    subgraph ANCHOR["PERIODIC: Merkle Anchoring (both parties)"]
+        direction TB
+        CA["🔗 A's Chain"]:::chainA
+        CB["🔗 B's Chain"]:::chainB
+        MA["A's Merkle Root"]:::mwA
+        MB["B's Merkle Root"]:::mwB
+        EXT["External Anchors\n(blockchain / TSA)"]:::external
+        
+        CA --> MA --> EXT
+        CB --> MB --> EXT
+    end
+
+    %% ============ PHASE 3: AUDIT ============
+    subgraph P3["PHASE 3: AUDIT"]
+        direction TB
+        
+        CA2["🔗 A's Chain"]:::chainA
+        CB2["🔗 B's Chain"]:::chainB
+        ANCHORS["External Anchors"]:::external
+        AVA["Auth VC A"]:::data
+        AVB["Auth VC B"]:::dataB
+        
+        AUD["🔍 Auditor"]:::auditor
+        
+        L1_CHK["Level 1: Integrity\n✓ Both chains valid\n✓ All signatures valid\n✓ Anchors match"]:::auditor
+        L2_CHK["Level 2: Compliance\n✓ Both within auth scope\n✓ narrative ↔ structuredData\n✓ payment ↔ agreed terms"]:::auditor
+        L3_CHK["Level 3: Reasonableness\n✓ Both perspectives available\n✓ Negotiation fairness\n✓ Decision quality"]:::auditor
+        XREF_CHK["Cross-Reference Check\n✓ counterpartyLastSeq\n  values consistent\n✓ No omitted records\n✓ Both terminations\n  agree on outcome"]:::crossref
+        
+        REPORT_A["Report → Principal A"]:::data
+        REPORT_B["Report → Principal B"]:::dataB
+        
+        PA2["👤 Principal A"]:::principalA
+        PB2["👤 Principal B"]:::principalB
+        
+        CA2 --> AUD
+        CB2 --> AUD
+        ANCHORS --> AUD
+        AVA --> AUD
+        AVB --> AUD
+        
+        AUD --> L1_CHK
+        AUD --> L2_CHK
+        AUD --> L3_CHK
+        AUD --> XREF_CHK
+        
+        L1_CHK --> REPORT_A
+        L2_CHK --> REPORT_A
+        L3_CHK --> REPORT_A
+        XREF_CHK --> REPORT_A
+        
+        L1_CHK --> REPORT_B
+        L2_CHK --> REPORT_B
+        L3_CHK --> REPORT_B
+        XREF_CHK --> REPORT_B
+        
+        REPORT_A --> PA2
+        REPORT_B --> PB2
+        
+        PA2 -->|"updated auth"| FA["Feedback → Agent A"]:::data
+        PB2 -->|"updated auth"| FB["Feedback → Agent B"]:::dataB
+    end
+
+    %% ============ CROSS-PHASE LINKS ============
+    P0 -.-> DISC
+    DISC -.-> P1
+    P1 -.-> P2
+    P1 -.-> ANCHOR
+    P2 -.-> ANCHOR
+    ANCHOR -.-> P3
+    P3 -.->|"feedback loops"| P0

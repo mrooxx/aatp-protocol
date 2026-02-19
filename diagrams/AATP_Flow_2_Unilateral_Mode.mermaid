@@ -1,0 +1,148 @@
+graph TB
+    %% ============ STYLING ============
+    classDef principal fill:#1B2A4A,stroke:#1B2A4A,color:#fff,font-weight:bold
+    classDef agent fill:#2C4A7C,stroke:#2C4A7C,color:#fff
+    classDef middleware fill:#3D6098,stroke:#3D6098,color:#fff
+    classDef counterparty fill:#8B5E3C,stroke:#8B5E3C,color:#fff
+    classDef auditor fill:#4A7A3D,stroke:#4A7A3D,color:#fff
+    classDef data fill:#FFF3CD,stroke:#D4A843,color:#333
+    classDef chain fill:#F8D7DA,stroke:#C0392B,color:#333
+    classDef external fill:#D5E8D4,stroke:#82B366,color:#333
+    classDef noaatp fill:#E0E0E0,stroke:#999,color:#666,stroke-dasharray:5 5
+
+    %% ============ PHASE 0: SETUP ============
+    subgraph P0["PHASE 0: SETUP"]
+        direction TB
+        PRINCIPAL_A["👤 Principal A"]:::principal
+        AUTH_VC["Authorization VC"]:::data
+        AGENT_CONFIG["Agent Config"]:::data
+        AUDITOR_CRED["Auditor Credential"]:::data
+        
+        AGENT_A_0["🤖 Agent A\n(AATP-compliant)"]:::agent
+        AUDITOR_0["🔍 Auditor"]:::auditor
+        
+        PRINCIPAL_A -->|"issues"| AUTH_VC
+        PRINCIPAL_A -->|"configures"| AGENT_CONFIG
+        AUTH_VC --> AGENT_A_0
+        AGENT_CONFIG --> AGENT_A_0
+        PRINCIPAL_A -->|"issues"| AUDITOR_CRED
+        AUDITOR_CRED --> AUDITOR_0
+    end
+
+    %% ============ PHASE 1: NEGOTIATION ============
+    subgraph P1["PHASE 1: SESSION & NEGOTIATION"]
+        direction TB
+
+        subgraph LAYER1["Layer 1: A2A Communication (unchanged)"]
+            direction LR
+            AA["🤖 Agent A\n(AATP)"]:::agent
+            AB["🤖 Agent B\n(no AATP)"]:::counterparty
+            AA <-->|"A2A messages:\nproposals, counters,\nacceptance"| AB
+        end
+
+        subgraph LAYER2["Layer 2: Audit Trail (Agent A only)"]
+            direction TB
+            MW_A["⚙️ Agent A\nAATP Middleware"]:::middleware
+            NO_MW_B["❌ Agent B\nNo AATP Middleware"]:::noaatp
+            
+            R_INIT["Record: Initiation\n(Agent A DID +\nAgent B Card URL as\ncounterpartyDid)"]:::data
+            R_PROP["Record: Proposal\nor Counter-Proposal\n(A's reasoning +\nbest-effort summary\nof B's communication)"]:::data
+            R_ACCEPT["Record: Accept/Reject\n(A's decision +\nreasoning)"]:::data
+            R_TERM["Record: Termination\n(outcome summary)"]:::data
+            
+            CHAIN_A["🔗 Agent A\nHash Chain"]:::chain
+            NO_CHAIN_B["❌ Agent B\nNo Hash Chain"]:::noaatp
+            
+            MW_A -->|"generates"| R_INIT
+            MW_A -->|"generates"| R_PROP
+            MW_A -->|"generates"| R_ACCEPT
+            MW_A -->|"generates"| R_TERM
+            
+            R_INIT --> CHAIN_A
+            R_PROP --> CHAIN_A
+            R_ACCEPT --> CHAIN_A
+            R_TERM --> CHAIN_A
+        end
+        
+        LAYER1 -.->|"A2A messages\nobserved by\nmiddleware"| LAYER2
+    end
+
+    %% ============ PHASE 2: SETTLEMENT ============
+    subgraph P2["PHASE 2: SETTLEMENT"]
+        direction TB
+        MW_PAY["⚙️ Agent A\nAATP Middleware"]:::middleware
+        
+        PAY_PROTO["Payment Protocol\n(x402 / AP2)"]:::external
+        
+        R_PAY_INIT["Record:\nPayment Initiation\n(amount, method,\nref to agreed terms)"]:::data
+        R_PAY_CONF["Record:\nPayment Confirmation\n(tx hash, settlement)"]:::data
+        
+        CHAIN_A2["🔗 Agent A\nHash Chain"]:::chain
+        
+        MW_PAY -->|"pre-payment"| R_PAY_INIT
+        R_PAY_INIT --> CHAIN_A2
+        
+        PAY_PROTO -->|"tx confirmation"| MW_PAY
+        MW_PAY -->|"post-payment"| R_PAY_CONF
+        R_PAY_CONF --> CHAIN_A2
+    end
+
+    %% ============ MERKLE ============
+    subgraph ANCHOR["PERIODIC: Merkle Anchoring (Agent A only)"]
+        direction LR
+        CHAIN_A3["🔗 Agent A Chain"]:::chain
+        MERKLE_A["Merkle Root"]:::middleware
+        EXT_A["External Anchor"]:::external
+        
+        CHAIN_A3 --> MERKLE_A --> EXT_A
+    end
+
+    %% ============ PHASE 3: AUDIT ============
+    subgraph P3["PHASE 3: AUDIT"]
+        direction TB
+        CHAIN_A4["🔗 Agent A\nHash Chain"]:::chain
+        ANCHOR_A["Anchors"]:::external
+        AUTH_VC2["Auth VC"]:::data
+        
+        AUDITOR_3["🔍 Auditor"]:::auditor
+        
+        L1["Level 1: Integrity ✓"]:::auditor
+        L2["Level 2: Compliance ✓"]:::auditor
+        L3["Level 3: Reasonableness\n⚠️ Limited: only A's\nperspective available"]:::auditor
+        
+        REPORT["Audit Report\n(one-sided view)"]:::data
+        PRINCIPAL_3["👤 Principal A"]:::principal
+        FEEDBACK["Updated Auth / Instructions"]:::data
+        
+        CHAIN_A4 --> AUDITOR_3
+        ANCHOR_A --> AUDITOR_3
+        AUTH_VC2 --> AUDITOR_3
+        
+        AUDITOR_3 --> L1
+        AUDITOR_3 --> L2
+        AUDITOR_3 --> L3
+        
+        L1 --> REPORT
+        L2 --> REPORT
+        L3 --> REPORT
+        
+        REPORT --> PRINCIPAL_3
+        PRINCIPAL_3 -->|"decides"| FEEDBACK
+    end
+
+    %% ============ KEY LIMITATIONS BOX ============
+    subgraph LIMITS["⚠️ UNILATERAL MODE LIMITATIONS"]
+        direction TB
+        LIM1["No cross-referencing\n(no counterpartyLastSeq)"]:::noaatp
+        LIM2["No omission detection\nfrom counterparty side"]:::noaatp
+        LIM3["Counterparty behavior\nsummarized best-effort\nby Agent A only"]:::noaatp
+        LIM4["Level 3 review limited\nto Agent A's perspective"]:::noaatp
+    end
+
+    %% ============ CROSS-PHASE LINKS ============
+    P0 -.-> P1
+    P1 -.-> P2
+    P1 -.-> ANCHOR
+    P2 -.-> ANCHOR
+    ANCHOR -.-> P3
+    P3 -.->|"feedback loop"| P0
