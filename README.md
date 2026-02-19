@@ -6,6 +6,10 @@ AI agents are sending emails, scheduling meetings, negotiating contracts, managi
 
 Any decision an AI agent makes that affects the outside world — not just financial transactions — deserves the same accountability that human decisions receive. AATP provides that infrastructure. Economic decisions are the natural starting point because they are the easiest to quantify and audit, but the protocol's design applies wherever an AI agent exercises judgment on behalf of a human principal.
 
+**The philosophy behind AATP:** No set of rules can anticipate every situation an autonomous agent will face. If rules could be 100% complete, you wouldn't need an AI agent — a simple program would do. The whole point of deploying an agent is that it can exercise judgment where rules don't reach. Principals care about outcomes, not rule-following for its own sake. AATP is built on this recognition: give agents hard constraints where they matter, let them choose how to achieve reasonable outcomes in the gaps, and make every choice auditable.
+
+**The key insight: don't verify intent — verify consistency.** Can we trust what an AI says about its own decisions? Not fully. But we don't need to. AATP applies the same standard human auditors have always used: you can't read a CEO's mind, but you can check whether their stated justification matches the financial data. AATP requires agents to produce a statement of record at each decision point, then enables independent auditors to check that record against what actually happened. When the record says one thing and reality shows another, the discrepancy itself is the finding.
+
 ## Why Now
 
 The infrastructure for autonomous AI agents is being deployed: communication protocols (Google A2A, Anthropic MCP), payment protocols (Coinbase x402, Google AP2), identity systems (W3C DIDs, Microsoft Entra Agent ID). What's missing is the accountability layer — a standard way to record and verify the decisions agents make on our behalf.
@@ -47,9 +51,9 @@ Three levels of review:
 
 1. **Integrity** (automated) — hash chain valid? signatures valid? timestamps monotonic?
 2. **Compliance** (semi-automated) — within authorization scope? narrative consistent with structured data?
-3. **Reasonableness** (human/AI judgment) — did the agent pursue outcomes the principal would consider reasonable?
+3. **Reasonableness** (human/AI judgment) — did the agent pursue outcomes the principal would consider reasonable? An independent auditor compares the agent's recorded reasoning against actual outcomes — narrative vs. structured data, stated terms vs. on-chain payments, claimed market conditions vs. reality. Discrepancies are the findings.
 
-Level 3 is AATP's most distinctive contribution. It addresses the [boundary gap problem](docs/conceptual-framework-v0.44.md#15-foundational-premise-why-rules-alone-are-not-enough): when AI agents operate in spaces where no predefined rule applies, their judgment must still be auditable.
+Level 3 is AATP's most distinctive contribution. It addresses the [boundary gap problem](docs/conceptual-framework-v0.44.md#15-foundational-premise-why-rules-alone-are-not-enough): when AI agents operate in spaces where no predefined rule applies, their judgment must still be auditable — not by verifying intent, but by verifying consistency between what the agent said and what it did.
 
 ## Seven Invariants
 
@@ -62,6 +66,16 @@ These define what AATP *is*. Changing any invariant constitutes a new protocol, 
 5. **Three-Level Review Separation** — integrity, compliance, and reasonableness remain distinct
 6. **Agent and Auditor Independence** — the entity that creates records cannot review them
 7. **Human Principal Sovereignty** — every audit trail traces back to a human principal
+
+## Non-Goals
+
+AATP is a recording and verification protocol. It is not a behavior control system. Specifically:
+
+- **AATP does not guarantee good decisions.** It makes decisions reviewable, not optimal.
+- **AATP does not prevent malicious agents.** It creates consequences for inconsistency, not barriers to action.
+- **AATP does not verify AI truthfulness.** It verifies consistency between stated reasoning and observable outcomes.
+- **AATP does not replace regulatory compliance.** It provides evidentiary infrastructure that regulators may find useful, but it is not a compliance framework for any jurisdiction.
+- **AATP does not enforce outcomes.** Consequences for audit findings are determined by the human principal, not by the protocol.
 
 ## Architecture
 
