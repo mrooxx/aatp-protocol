@@ -1,0 +1,86 @@
+[
+  {
+    "event_id": "evt-001",
+    "type": "bill_received",
+    "description": "Electricity bill due 2026-03-01",
+    "data": {
+      "payee": "Pacific Gas & Electric",
+      "amount": 127.50,
+      "due_date": "2026-03-01",
+      "category": "bills"
+    }
+  },
+  {
+    "event_id": "evt-002",
+    "type": "subscription_review",
+    "description": "DataSync Pro subscription — zero usage detected",
+    "data": {
+      "service": "DataSync Pro",
+      "monthly_cost": 9.99,
+      "last_used_days": 187,
+      "category": "subscriptions",
+      "alternatives": []
+    }
+  },
+  {
+    "event_id": "evt-003",
+    "type": "subscription_review",
+    "description": "CloudVault subscription — low usage, cheaper alternative found",
+    "data": {
+      "service": "CloudVault",
+      "monthly_cost": 14.99,
+      "last_used_days": 92,
+      "category": "subscriptions",
+      "alternatives": [
+        {"service": "BackupLite", "monthly_cost": 5.99, "comparable_features": true}
+      ]
+    }
+  },
+  {
+    "event_id": "evt-004",
+    "type": "price_change",
+    "description": "Netflix increasing price from $15.49 to $17.99",
+    "data": {
+      "service": "Netflix",
+      "current_price": 15.49,
+      "new_price": 17.99,
+      "effective_date": "2026-04-01",
+      "category": "subscriptions"
+    }
+  },
+  {
+    "event_id": "evt-005",
+    "type": "investment_opportunity",
+    "description": "AAPL dropped to $178.20, below average cost basis",
+    "data": {
+      "ticker": "AAPL",
+      "current_price": 178.20,
+      "avg_cost": 182.00,
+      "shares_held": 15,
+      "suggested_action": "consider buying dip",
+      "suggested_amount": 500.00,
+      "category": "investments"
+    }
+  },
+  {
+    "event_id": "evt-006",
+    "type": "schedule_conflict",
+    "description": "Client meeting conflicts with dentist appointment",
+    "data": {
+      "event_a": {"name": "Client meeting (Q1 review)", "time": "2026-02-25T14:00:00Z", "reschedulable": false},
+      "event_b": {"name": "Dentist appointment", "time": "2026-02-25T14:30:00Z", "reschedulable": true},
+      "category": "scheduling"
+    }
+  },
+  {
+    "event_id": "evt-007",
+    "type": "new_service_offer",
+    "description": "AI writing assistant offer at $12.99/month",
+    "data": {
+      "service": "WriteBot AI",
+      "monthly_cost": 12.99,
+      "trial_period_days": 14,
+      "category": "subscriptions"
+    }
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "description": "AATP bilateral OFFER record — canonical self-test",
+  "record": {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019c766e-f3b0-7acf-b300-4bf99166d520",
+      "session_id": "019c766e-f3b0-79b0-88cb-3c9aed4102e9",
+      "timestamp": "2026-02-19T15:05:08.784991Z",
+      "audit_point_type": "offer",
+      "mode": "bilateral",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Offering 1000 units at $10",
+    "structured_data": {
+      "action": "offer",
+      "quantity": 1000,
+      "amount": 10.0,
+      "currency": "USD"
+    },
+    "authorization": {
+      "principal_did": "did:example:test-principal",
+      "agent_did": "did:key:z6MkkPm61bP4hUZ24sxruVDoYet6SrWyTwGg9KHVDkafZ3sA",
+      "scope_summary": "test scope",
+      "authorization_vc_hash": null,
+      "credential_reference": null
+    },
+    "counterparty": {
+      "counterparty_did": "did:key:z6MkisYXFm5UoWJeCxQanGw1TcWTDh4ssmereGJoscGxefYm",
+      "counterparty_ref": null,
+      "counterparty_last_seq": null
+    },
+    "chain": {
+      "sequence_number": 1,
+      "previous_hash": "9be957536bc111cc666d0fb9f3905e41d0f3514e66be4e2573f37a9990d8c4c4",
+      "record_hash": "30fe44275645b77f60420d2c81e350d42ceb7ac784d00029015687146465a8a6",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6MkkPm61bP4hUZ24sxruVDoYet6SrWyTwGg9KHVDkafZ3sA",
+        "value": "1bb935ffee571a9c07b69a3877301818b9285136114010ecb8a59dbcf90b6c925ac8ef1942babbd87485116f51accf665b9d47e440b6489b21b25801e28bec0a"
+      }
+    }
+  },
+  "canonical_sha256": "30fe44275645b77f60420d2c81e350d42ceb7ac784d00029015687146465a8a6"
+}

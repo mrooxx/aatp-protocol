@@ -1,0 +1,32 @@
+{
+  "principal": {
+    "name": "Alice Chen",
+    "did": "did:key:z6MkPrincipalAlice"
+  },
+  "finances": {
+    "checking_account_balance": 4250.00,
+    "savings_account_balance": 12800.00,
+    "brokerage_balance": 3200.00,
+    "monthly_budget": 800.00,
+    "budget_spent_this_month": 332.50,
+    "budget_remaining": 467.50
+  },
+  "portfolio": {
+    "AAPL": {"shares": 15, "avg_cost": 182.00, "current_price": 185.50},
+    "MSFT": {"shares": 8, "avg_cost": 410.00, "current_price": 415.20}
+  },
+  "subscriptions": [
+    {"service": "Netflix", "monthly_cost": 15.49, "last_used_days": 3, "category": "entertainment"},
+    {"service": "DataSync Pro", "monthly_cost": 9.99, "last_used_days": 187, "category": "productivity"},
+    {"service": "CloudVault", "monthly_cost": 14.99, "last_used_days": 92, "category": "storage"},
+    {"service": "Spotify", "monthly_cost": 10.99, "last_used_days": 1, "category": "entertainment"},
+    {"service": "Adobe CC", "monthly_cost": 54.99, "last_used_days": 12, "category": "productivity"}
+  ],
+  "pending_bills": [],
+  "authorization": {
+    "scope": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+    "max_single_transaction": 500.00,
+    "allowed_categories": ["bills", "subscriptions", "investments", "transfers", "scheduling", "entertainment", "productivity", "storage"],
+    "monthly_budget_limit": 800.00
+  }
+}
