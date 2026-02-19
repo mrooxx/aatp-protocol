@@ -23,15 +23,16 @@ AATP provides a concrete, implementable protocol — not just a theoretical fram
 AATP adds an **audit layer** alongside existing agent infrastructure. It does not replace any communication, payment, or identity protocol.
 
 **Two layers:**
-- **Working Channel** — where agents negotiate and transact (via A2A, MCP, etc.)
-- **Audit Trail** — where decisions are recorded, sealed, and made reviewable
+
+* **Working Channel** — where agents negotiate and transact (via A2A, MCP, etc.)
+* **Audit Trail** — where decisions are recorded, sealed, and made reviewable
 
 **Eight decision points** define when records are generated: Opening, Offer, Counter-Offer, Agreement/Rejection, Payment Sent, Payment Confirmed, Problem/Dispute, and Closing.
 
 **Three operating modes** enable gradual adoption:
 
 | Mode | Participants | Value |
-|------|-------------|-------|
+| --- | --- | --- |
 | **Solo** | 1 agent, no counterparty | Internal oversight of autonomous decisions |
 | **Unilateral** | 1 AATP agent + 1 non-AATP agent | One-sided transaction audit |
 | **Bilateral** | 2 AATP agents | Full cross-referenced accountability |
@@ -42,10 +43,10 @@ Solo mode means AATP is useful from day one — even a single personal AI managi
 
 Every audit record contains:
 
-- **Narrative** — natural language explanation of what the agent decided and why (enables human judgment)
-- **Structured data** — machine-readable fields for automated verification
-- **Cryptographic seal** — SHA-256 hash + Ed25519 signature, chained to the previous record
-- **Authorization reference** — link to the human principal's delegation scope
+* **Narrative** — natural language explanation of what the agent decided and why (enables human judgment)
+* **Structured data** — machine-readable fields for automated verification
+* **Cryptographic seal** — SHA-256 hash + Ed25519 signature, chained to the previous record
+* **Authorization reference** — link to the human principal's delegation scope
 
 Three levels of review:
 
@@ -71,11 +72,11 @@ These define what AATP *is*. Changing any invariant constitutes a new protocol, 
 
 AATP is a recording and verification protocol. It is not a behavior control system. Specifically:
 
-- **AATP does not guarantee good decisions.** It makes decisions reviewable, not optimal.
-- **AATP does not prevent malicious agents.** It creates consequences for inconsistency, not barriers to action.
-- **AATP does not verify AI truthfulness.** It verifies consistency between stated reasoning and observable outcomes.
-- **AATP does not replace regulatory compliance.** It provides evidentiary infrastructure that regulators may find useful, but it is not a compliance framework for any jurisdiction.
-- **AATP does not enforce outcomes.** Consequences for audit findings are determined by the human principal, not by the protocol.
+* **AATP does not guarantee good decisions.** It makes decisions reviewable, not optimal.
+* **AATP does not prevent malicious agents.** It creates consequences for inconsistency, not barriers to action.
+* **AATP does not verify AI truthfulness.** It verifies consistency between stated reasoning and observable outcomes.
+* **AATP does not replace regulatory compliance.** It provides evidentiary infrastructure that regulators may find useful, but it is not a compliance framework for any jurisdiction.
+* **AATP does not enforce outcomes.** Consequences for audit findings are determined by the human principal, not by the protocol.
 
 ## Architecture
 
@@ -110,32 +111,52 @@ Detailed architecture diagrams are in [`diagrams/`](diagrams/).
 **Phase: v0.x — Founder Stewardship**
 
 | Component | Status |
-|-----------|--------|
-| Conceptual Framework (v0.44) | ✅ Complete |
-| Governance Addendum (v0.21) | ✅ Complete |
+| --- | --- |
+| Conceptual Framework (v0.44) | ✅ Frozen |
+| Governance Addendum (v0.21) | ✅ Frozen |
 | Architecture Diagrams | ✅ Complete |
-| Technical Specification | 📝 In progress |
-| Reference Implementation (Python SDK) | 🔨 In development |
-| Solo Mode Demo | 🔜 Planned |
-| Bilateral Mode Demo | 🔜 Planned |
+| Reference Implementation (Python SDK) | ✅ v0.1.0 |
+| Solo Mode Demo | ✅ Complete |
+| Bilateral Mode Demo | ✅ Complete |
+| Tamper Detection Demo | ✅ Complete |
+| Authorization Violation Demo | ✅ Complete |
+| CLI Audit Trail Viewer | ✅ Complete |
+| 107 Tests (6 test files) | ✅ All Passing |
+| Real LLM Agent Integration | 🔨 Stage 3 — In Progress |
+| Technical Specification | 📝 Planned |
 
-See [ROADMAP.md](ROADMAP.md) for the development timeline.
+**SDK v0.1.0 key metrics:** 10 source modules across 3 packages, 2 external dependencies (pydantic, cryptography), zero LLM dependencies in the core SDK.
+
+See [ROADMAP.md](docs/ROADMAP.md) for the full development timeline.
 
 ## Quick Start
 
-> Reference implementation is under active development. When ready:
-> ```bash
-> git clone https://github.com/mrooxx/aatp-protocol.git
-> cd aatp-protocol
-> pip install -e .
-> python examples/demo_solo.py
-> ```
+```bash
+git clone https://github.com/mrooxx/aatp-protocol.git
+cd aatp-protocol
+pip install -e ".[dev]"
+
+# Run the Solo Mode demo — a personal finance agent with full audit trail
+python examples/demo_solo.py
+
+# Run the Bilateral Mode demo — two agents negotiating API credits
+python examples/demo_bilateral.py
+
+# See tamper detection in action
+python examples/demo_tamper.py
+
+# View an audit trail in human-readable format
+python -m tools.aatp_cli view examples/output/trail.json
+
+# Run all tests
+pytest
+```
 
 ## Documentation
 
-- [**Conceptual Framework v0.44**](docs/conceptual-framework-v0.44.md) — full rationale, design principles, and protocol logic *(start here)*
-- [**Governance Addendum v0.21**](docs/governance-v0.21.md) — versioning, invariant protection, transition plan
-- [**Research: Audit-Derived Correction**](docs/research/audit-derived-correction.md) — how audit findings improve agent behavior
+* [**Conceptual Framework v0.44**](docs/conceptual-framework-v0.44.md) — full rationale, design principles, and protocol logic *(start here)*
+* [**Governance Addendum v0.21**](docs/governance-v0.21.md) — versioning, invariant protection, transition plan
+* [**Development Roadmap**](docs/ROADMAP.md) — phased execution plan
 
 ## Contributing
 
@@ -145,8 +166,8 @@ During Phase I (Founder Stewardship, v0.x), the founding maintainer reviews all 
 
 ## License
 
-- **Documentation:** [CC BY 4.0](LICENSE-DOCS) — use, share, adapt with attribution
-- **Code:** [MIT](LICENSE-CODE) — use freely
+* **Documentation:** [CC BY 4.0](DOCS-LICENSE) — use, share, adapt with attribution
+* **Code:** [MIT](LICENSE-CODE) — use freely
 
 ## Author
 
