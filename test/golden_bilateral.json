@@ -3,9 +3,9 @@
   "record": {
     "header": {
       "protocol_version": "0.1.0",
-      "record_id": "019ca919-8dd2-712d-883f-d108ca0e13bf",
-      "session_id": "019ca919-8dd1-758d-b19a-efcfe23c25dc",
-      "timestamp": "2026-03-01T11:12:30.162992Z",
+      "record_id": "019ca9d5-7bba-7baf-a0fb-99a1f8b0b788",
+      "session_id": "019ca9d5-7bba-7cda-bb68-5e863b2f0e41",
+      "timestamp": "2026-03-01T14:37:46.298547Z",
       "audit_point_type": "offer",
       "mode": "bilateral",
       "audit_language": "en",
@@ -21,26 +21,26 @@
     },
     "authorization": {
       "principal_did": "did:example:test-principal",
-      "agent_did": "did:key:z6MkgQKsKeRasb5M7PgeaZKzxsEF9KFGVjopDTkN2By8MFT8",
+      "agent_did": "did:key:z6MkiYNsRKC6hjbUqiXjGvLVf3wcAHrQiEXiBvgACWYSk1YU",
       "scope_summary": "test scope",
       "authorization_vc_hash": null,
       "credential_reference": null
     },
     "counterparty": {
-      "counterparty_did": "did:key:z6Mkgz65B1XhKNJ2hCi2Koe5tmocEHrHd1GotGDdhYSrXDTx",
+      "counterparty_did": "did:key:z6MkmMnK1Nt28hzVSWx4Y9bMbdc8v3qWJtEeD4S8JQAsAoJs",
       "counterparty_ref": null,
       "counterparty_last_seq": null
     },
     "chain": {
       "sequence_number": 1,
-      "previous_hash": "573f51f188b4e58e0bb1ae4b90a09f2c0ed459b26e8af72721ff809004a6d9f8",
-      "record_hash": "7fdf7d058162a69d398ec7f315f0a8549718da780767ec85a1c48ef324a96140",
+      "previous_hash": "1476a6e52c93362f99016d78c366ec4f87ac180fb4edaffc9d2d4a72f9539ab4",
+      "record_hash": "0f8bf21513ff8fc6634369dedc45bbdb66a99faa0b6a4aa32b8c664c97eb9d22",
       "signature": {
         "algorithm": "Ed25519",
-        "signer": "did:key:z6MkgQKsKeRasb5M7PgeaZKzxsEF9KFGVjopDTkN2By8MFT8",
-        "value": "e4912bcbefa00bbe8ac4e0dbbc55c193bc1e46fc14c9907ea9ced8743f1ad453039501fafe91e6625c9fb720e0c5f151e249d8c8aa446eee721c44a5a885ea00"
+        "signer": "did:key:z6MkiYNsRKC6hjbUqiXjGvLVf3wcAHrQiEXiBvgACWYSk1YU",
+        "value": "037f69313f270d9b2a17c0737d00dbb294391c7fd0a649609ca546c08f0950cb887c451722f007549bfa0fe70b3c92eee48661a446250eb010accb2d5ad36e08"
       }
     }
   },
-  "canonical_sha256": "7fdf7d058162a69d398ec7f315f0a8549718da780767ec85a1c48ef324a96140"
+  "canonical_sha256": "0f8bf21513ff8fc6634369dedc45bbdb66a99faa0b6a4aa32b8c664c97eb9d22"
 }
