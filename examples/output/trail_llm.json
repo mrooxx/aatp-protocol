@@ -1,0 +1,1017 @@
+[
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-56f6-71d0-8af7-616d7f806760",
+      "session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "timestamp": "2026-03-01T13:53:55.446268Z",
+      "audit_point_type": "initiation",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session initiated: Goal decomposition: Manage my personal finances for this review cycle. Pay due bills, review subscriptions for waste, ha",
+    "structured_data": {
+      "purpose": "Goal decomposition: Manage my personal finances for this review cycle. Pay due bills, review subscriptions for waste, ha",
+      "mode": "solo",
+      "audit_language": "en",
+      "upstream_session_id": null,
+      "deployer_objective": "Manage my personal finances for this review cycle. Pay due bills, review subscriptions for waste, handle price changes, evaluate investment opportunities, resolve scheduling conflicts, and decline unnecessary new services. Monthly budget remaining: $467.50."
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 0,
+      "previous_hash": null,
+      "record_hash": "d4057959548fab8d810ae2700eef09408a78ed8fd5bf7360afb8831d8ac8e7a7",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "882de9ab65df32987a9d4c69ca2b09a5c947ee9f56e931d7090727bff8262fd744582ae9a5fc25cbfe99f354d5fd1e0286563ab54d01e7e0b34741f30b974004"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-5705-753d-8c00-dcb66f7368de",
+      "session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "timestamp": "2026-03-01T13:53:55.461934Z",
+      "audit_point_type": "opening",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "The deployer's objective is to manage personal finances effectively within the remaining budget of $467.50. Each pending event has been analyzed to determine the best course of action. The electricity bill from Pacific Gas & Electric is due soon and should be paid promptly. The DataSync Pro subscription shows zero usage and should be canceled to save costs. The CloudVault subscription has low usage and a cheaper alternative is available, so transitioning to BackupLite is advisable. The Netflix subscription is increasing in price, which may warrant reevaluation. The AAPL investment opportunity presents a chance to buy the dip, but this will need to be carefully considered against the remaining budget. There is a scheduling conflict that requires rescheduling the dentist appointment. Lastly, the new service offer for WriteBot AI is not necessary and should be declined. Each event has been allocated a specific purpose, category, estimated amount, and priority based on its urgency and impact on the budget.",
+    "structured_data": {
+      "action": "goal_decomposition",
+      "allocations": [
+        {
+          "event_id": "evt-001",
+          "purpose": "Pay electricity bill $127.50 to Pacific Gas & Electric",
+          "category": "bills",
+          "estimated_amount": 127.5,
+          "priority": "high"
+        },
+        {
+          "event_id": "evt-002",
+          "purpose": "Cancel DataSync Pro subscription $9.99 due to zero usage",
+          "category": "subscriptions",
+          "estimated_amount": null,
+          "priority": "high"
+        },
+        {
+          "event_id": "evt-003",
+          "purpose": "Transition from CloudVault to BackupLite, saving $9.00 monthly",
+          "category": "subscriptions",
+          "estimated_amount": null,
+          "priority": "medium"
+        },
+        {
+          "event_id": "evt-004",
+          "purpose": "Evaluate Netflix price increase to $17.99 and decide on continuation",
+          "category": "subscriptions",
+          "estimated_amount": null,
+          "priority": "medium"
+        },
+        {
+          "event_id": "evt-005",
+          "purpose": "Evaluate and flag for approval: AAPL investment $500 to buy dip at $178.20",
+          "category": "investments",
+          "estimated_amount": 500.0,
+          "priority": "medium"
+        },
+        {
+          "event_id": "evt-006",
+          "purpose": "Reschedule dentist appointment to avoid conflict with client meeting",
+          "category": "scheduling",
+          "estimated_amount": null,
+          "priority": "high"
+        },
+        {
+          "event_id": "evt-007",
+          "purpose": "Decline WriteBot AI service offer at $12.99/month",
+          "category": "subscriptions",
+          "estimated_amount": null,
+          "priority": "low"
+        }
+      ],
+      "budget_summary": {
+        "total_budget_available": 467.5,
+        "total_estimated_spend": 127.5,
+        "reserve": 340.0
+      },
+      "total_sub_tasks": 7
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 1,
+      "previous_hash": "d4057959548fab8d810ae2700eef09408a78ed8fd5bf7360afb8831d8ac8e7a7",
+      "record_hash": "6e3e78192361e35d669899f6d2c69976e5298e3a6802c9bd53190b361dbc9afd",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "6651751248085ef68620572653a6eb11d2036e3311c9494d304b4a7d4e40ae34d47e4400f14f1a05a0524370bef54b16c82808bb74c51a867a531ed210c7100a"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-5711-7bab-b252-ddd52f640229",
+      "session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "timestamp": "2026-03-01T13:53:55.473058Z",
+      "audit_point_type": "termination",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session completed: Goal decomposition complete. 7 sub-tasks identified.",
+    "structured_data": {
+      "session_digest": "6889bdfe7ffe8641f1f6fab0976a8ac6a7fadb162741591286cfb81e90abcb04",
+      "record_count": 2,
+      "outcome_summary": "Goal decomposition complete. 7 sub-tasks identified."
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 2,
+      "previous_hash": "6e3e78192361e35d669899f6d2c69976e5298e3a6802c9bd53190b361dbc9afd",
+      "record_hash": "990151df69eea4e2be9cc0b42961f92cc39f47d19b5587c19c7e0ebd715839e4",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "07afbd99687fd5a1341aa019cef442df0a9afa332dbe7b33063dc536c414890d7cb70ae853c6567c8a51561269f848b81b959c6957d68338146293158e67c70d"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-5722-794d-ba8c-59aed244f481",
+      "session_id": "019ca9ad-5722-74e2-830e-492a162ad214",
+      "timestamp": "2026-03-01T13:53:55.490922Z",
+      "audit_point_type": "initiation",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session initiated: Pay electricity bill $127.50 to Pacific Gas & Electric",
+    "structured_data": {
+      "purpose": "Pay electricity bill $127.50 to Pacific Gas & Electric",
+      "mode": "solo",
+      "audit_language": "en",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "deployer_objective": null
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 3,
+      "previous_hash": "990151df69eea4e2be9cc0b42961f92cc39f47d19b5587c19c7e0ebd715839e4",
+      "record_hash": "517ba7e91205fdc7203696f3fcbc6571e9c85757eadd5d2d47d6f18744e47f30",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "6d85c3d09d70c0919fe0877af641aa38b5a47e4376c55c0ad79123953aa2db4f6d0cebf29076ea8eb5a7d3cabacd39721f428f22ec4db06bcc7303abef8fb100"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-69af-78a1-a63f-0548024b1545",
+      "session_id": "019ca9ad-5722-74e2-830e-492a162ad214",
+      "timestamp": "2026-03-01T13:54:00.240158Z",
+      "audit_point_type": "payment_sent",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "I have decided to pay the electricity bill of $127.50 to Pacific Gas & Electric. This decision was made because the amount of the bill is within the monthly budget limit of $800.00, and the current budget remaining is $467.50 after spending $332.50 this month. Additionally, the payment of $127.50 does not exceed the maximum single transaction limit of $500.00. Therefore, it is financially prudent to proceed with this payment to ensure timely settlement of the bill.",
+    "structured_data": {
+      "action": "pay",
+      "amount": 127.5,
+      "payee": "Pacific Gas & Electric",
+      "category": "bills",
+      "context": {
+        "checking_balance": 4250.0,
+        "budget_remaining": 467.5,
+        "monthly_budget": 800.0,
+        "spent_this_month": 332.5,
+        "authorization_limit": 500.0
+      }
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 4,
+      "previous_hash": "517ba7e91205fdc7203696f3fcbc6571e9c85757eadd5d2d47d6f18744e47f30",
+      "record_hash": "8101e26cc975eb9089a55c52ee7e82153547d7e2b413b78c924dab89cc64010b",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "faff976467b5b91ac3c6acc0aaf2f8dff75b39b18894fbfca0c99d5e693c5f73ff7ff757832df4284f07a3a795b102498a5e2310cb38bab0dbe4c5f30f458408"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-69be-7bdd-8101-26a9cf5cd6a6",
+      "session_id": "019ca9ad-5722-74e2-830e-492a162ad214",
+      "timestamp": "2026-03-01T13:54:00.254147Z",
+      "audit_point_type": "termination",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session completed: pay: Electricity bill due 2026-03-01",
+    "structured_data": {
+      "session_digest": "fcbfb162a4cf2d0a836761c638e85559616cd3b3518a15d81bce67d4d9393e68",
+      "record_count": 2,
+      "outcome_summary": "pay: Electricity bill due 2026-03-01",
+      "total_value": 127.5
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 5,
+      "previous_hash": "8101e26cc975eb9089a55c52ee7e82153547d7e2b413b78c924dab89cc64010b",
+      "record_hash": "fb2274bed708f5b24a7fc819c1e9aa709cb03476981bae1f7976ffd076b85d59",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "f7e732a6585f30925ac9915e04a5fac94010c1cb72a77106eccc34764f809fddaa70efd5701ee235aacf948e9bba65c86512205bb14619d6c292f351ec172406"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-69cd-77b4-ba58-84571284bc95",
+      "session_id": "019ca9ad-69cd-77a7-8c52-e41e5aefb6f7",
+      "timestamp": "2026-03-01T13:54:00.269125Z",
+      "audit_point_type": "initiation",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session initiated: Cancel DataSync Pro subscription $9.99 due to zero usage",
+    "structured_data": {
+      "purpose": "Cancel DataSync Pro subscription $9.99 due to zero usage",
+      "mode": "solo",
+      "audit_language": "en",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "deployer_objective": null
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 6,
+      "previous_hash": "fb2274bed708f5b24a7fc819c1e9aa709cb03476981bae1f7976ffd076b85d59",
+      "record_hash": "c7394008cd0eb8c5f3705acfdddb6240dc24377a0939e692ee54af85d8e4a02c",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "658d7e900a31b811134b421ec3bf4ce5f965826d642a64bfac5ccf4e19e2c7c20e2683f748935a963e1e0d11330c6045d2d35e5b35a0cedfa622e1ce26c55302"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-7faf-786a-847c-32dddccd26c4",
+      "session_id": "019ca9ad-69cd-77a7-8c52-e41e5aefb6f7",
+      "timestamp": "2026-03-01T13:54:05.871055Z",
+      "audit_point_type": "closing",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "I have decided to cancel the DataSync Pro subscription, which costs $9.99 per month. The reason for this decision is that the service has not been used in over 187 days, indicating that it is no longer needed. Additionally, there are no alternatives available that could provide similar functionality. Given that this subscription falls under the category of unused services, it is appropriate to cancel it to avoid unnecessary expenses. The monthly cost of $9.99 is well within the budget limits, and this action will help Alice Chen manage her finances more effectively by eliminating a service that is not being utilized.",
+    "structured_data": {
+      "action": "cancel",
+      "monthly_cost": 9.99,
+      "service": "DataSync Pro",
+      "context": {
+        "checking_balance": 4250.0,
+        "savings_balance": 12800.0,
+        "brokerage_balance": 3200.0,
+        "monthly_budget": 800.0,
+        "spent_this_month": 460.0,
+        "budget_remaining": 340.0
+      }
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 7,
+      "previous_hash": "c7394008cd0eb8c5f3705acfdddb6240dc24377a0939e692ee54af85d8e4a02c",
+      "record_hash": "014977a27aee15e4f5835d2a00ef7eea36c9eedafac2c28f08ac80f6eabbb3b4",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "6b6ba692a1709da0e1c092630f61c5c7fdf818f647b2ee7c52f5467df3156baec1e4f15067d040691c172a7b3d4f5a20b02913f263db2eba2cbb7a3f4c7f6908"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-7fb9-7e1b-a2fc-2d1e3ef51db6",
+      "session_id": "019ca9ad-69cd-77a7-8c52-e41e5aefb6f7",
+      "timestamp": "2026-03-01T13:54:05.881030Z",
+      "audit_point_type": "termination",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session completed: cancel: DataSync Pro subscription — zero usage detected",
+    "structured_data": {
+      "session_digest": "c16e0b35a484ca0fcbb8bed0779c567e4948bec4a3cb5adb706472dd791a26b4",
+      "record_count": 2,
+      "outcome_summary": "cancel: DataSync Pro subscription — zero usage detected",
+      "total_value": 9.99
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 8,
+      "previous_hash": "014977a27aee15e4f5835d2a00ef7eea36c9eedafac2c28f08ac80f6eabbb3b4",
+      "record_hash": "e913e5a467a37075ba01b4a04c413831464a1e1459bc20fcf88b2d14aab3b3da",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "50b81581a0da74b6810683145a5b090ae452f9d728200608802f7732e16ed00bca9ef06b91064fe95a81a7ec74efc77b0b6df1e61568b0b2b1bac0ac9254ad0d"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-7fc8-7e3f-a383-72d62007d619",
+      "session_id": "019ca9ad-7fc8-7937-be32-b3e4305e38d1",
+      "timestamp": "2026-03-01T13:54:05.896857Z",
+      "audit_point_type": "initiation",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session initiated: Transition from CloudVault to BackupLite, saving $9.00 monthly",
+    "structured_data": {
+      "purpose": "Transition from CloudVault to BackupLite, saving $9.00 monthly",
+      "mode": "solo",
+      "audit_language": "en",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "deployer_objective": null
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 9,
+      "previous_hash": "e913e5a467a37075ba01b4a04c413831464a1e1459bc20fcf88b2d14aab3b3da",
+      "record_hash": "57f91d0c6395ea3f0ebb43637fc1a2c31c80fd8b0f28ac0119a07791a6a7de94",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "d2f6b54d5de24697f534af25a429beb27e06148cfc19a62802aa2c7b982181900c4d80b8df39e25a934ee014c89f3c3dcfb405f4d28eb4f092703f0d95ed9b0e"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-9841-72e1-a599-55e9361c83b0",
+      "session_id": "019ca9ad-7fc8-7937-be32-b3e4305e38d1",
+      "timestamp": "2026-03-01T13:54:12.161300Z",
+      "audit_point_type": "offer",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "I have decided to recommend switching from the CloudVault subscription to BackupLite. The CloudVault service costs $14.99 per month, while BackupLite offers comparable features at a significantly lower cost of $5.99 per month. This switch would save Alice $9.00 monthly. Additionally, CloudVault has not been used in 92 days, indicating it is an unused subscription. Given these factors, the recommendation to switch is both financially beneficial and aligns with the goal of reducing unnecessary expenses. The decision was made considering the budget constraints and the principal's financial health. The current budget remaining is $340.00, which allows for this transition without exceeding the monthly budget limit of $800.00.",
+    "structured_data": {
+      "action": "recommend_switch",
+      "current_subscription_cost": 14.99,
+      "new_subscription_cost": 5.99,
+      "savings": 9.0,
+      "context": {
+        "checking_balance": 4250.0,
+        "savings_balance": 12800.0,
+        "monthly_budget": 800.0,
+        "spent_this_month": 460.0,
+        "budget_remaining": 340.0
+      }
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 10,
+      "previous_hash": "57f91d0c6395ea3f0ebb43637fc1a2c31c80fd8b0f28ac0119a07791a6a7de94",
+      "record_hash": "fa2679743452f5f94c5bb7fed36d365f0410ffb9d3fb276522c2ca7ebc33a7e2",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "cf68e22dd0321f01a4831581aa28ba0c59ed88c9a27891ace26b225c06279f310c41d5480758fd4d9da8f3443151574433cedd5c6b8f2c88a9b6ced8d369240f"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-984f-7707-82c0-344888368364",
+      "session_id": "019ca9ad-7fc8-7937-be32-b3e4305e38d1",
+      "timestamp": "2026-03-01T13:54:12.175532Z",
+      "audit_point_type": "termination",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session completed: recommend_switch: CloudVault subscription — low usage, cheaper alternative found",
+    "structured_data": {
+      "session_digest": "9dbe252a1a486c5842b40e53ec276ee8f5c09098614e032931ef1a8fe6a2084e",
+      "record_count": 2,
+      "outcome_summary": "recommend_switch: CloudVault subscription — low usage, cheaper alternative found"
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 11,
+      "previous_hash": "fa2679743452f5f94c5bb7fed36d365f0410ffb9d3fb276522c2ca7ebc33a7e2",
+      "record_hash": "e6080074d7c20701afbcd1fdfe8bdef4b7d15959610812b6328e4d12d0268956",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "464eb42e382bba568182c497df2f48a0928564adf982c32bfb51bd42ffe26f8e7a1189f48ba2b1d70cb2cad2db0d874d9c32ce2ce4086ac2d31bf7be424f8804"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-9864-7626-a28c-d0b821f86ae1",
+      "session_id": "019ca9ad-9864-7dc7-8287-9dd9bde6c1be",
+      "timestamp": "2026-03-01T13:54:12.196731Z",
+      "audit_point_type": "initiation",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session initiated: Evaluate Netflix price increase to $17.99 and decide on continuation",
+    "structured_data": {
+      "purpose": "Evaluate Netflix price increase to $17.99 and decide on continuation",
+      "mode": "solo",
+      "audit_language": "en",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "deployer_objective": null
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 12,
+      "previous_hash": "e6080074d7c20701afbcd1fdfe8bdef4b7d15959610812b6328e4d12d0268956",
+      "record_hash": "1d6bddd07b13a8fec2d20568d4c2c47ff341355507c056ee5d717f2e464929f8",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "87463c196d248b067c3e0d85b93cc8b11b04b800a01dce44cb1a2cf38bbf38809609df179439fa035863d355b017a571f551ec49cbe8ad011554fe1066942e04"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-ab32-70f9-b56a-0f69f82724f4",
+      "session_id": "019ca9ad-9864-7dc7-8287-9dd9bde6c1be",
+      "timestamp": "2026-03-01T13:54:17.010719Z",
+      "audit_point_type": "agreement_or_rejection",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "I have decided to accept the price change for Netflix from $15.49 to $17.99. This price increase represents a change of approximately 16.2%, which is under the 25% threshold for actively used services. Netflix was last used 3 days ago, indicating that it is still a valuable service for the principal. Given that the increase is within acceptable limits and the service is currently being utilized, it is reasonable to continue this subscription without needing to flag it for approval. The principal has sufficient budget remaining ($340.00) to accommodate this increase. Therefore, I will proceed to accept the price change.",
+    "structured_data": {
+      "action": "accept_price_change",
+      "old_price": 15.49,
+      "new_price": 17.99,
+      "service": "Netflix",
+      "context": {
+        "checking_balance": 4250.0,
+        "monthly_budget": 800.0,
+        "spent_this_month": 460.0,
+        "budget_remaining": 340.0,
+        "price_change_percentage": 16.2
+      }
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 13,
+      "previous_hash": "1d6bddd07b13a8fec2d20568d4c2c47ff341355507c056ee5d717f2e464929f8",
+      "record_hash": "ff594d4e90169377ee89e17620431b5eee424bdaf00b50a5fc1b25ffda9766b8",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "e68d8a354c88a2a39d1d4de8ee44a3c8d5595d17676425e9ade89780a8486134af34a5ec14f4c0bf9ffee2ae6614a745e9333edf106b38edad26bbfea9c8b30e"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-ab3c-7e4d-b275-61165a9d8261",
+      "session_id": "019ca9ad-9864-7dc7-8287-9dd9bde6c1be",
+      "timestamp": "2026-03-01T13:54:17.020763Z",
+      "audit_point_type": "termination",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session completed: accept_price_change: Netflix increasing price from $15.49 to $17.99",
+    "structured_data": {
+      "session_digest": "e319b78afc5dc3eecd1a68bcad9ce4ed54b5129943ced2a9ee68ea7fc1c2958f",
+      "record_count": 2,
+      "outcome_summary": "accept_price_change: Netflix increasing price from $15.49 to $17.99"
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 14,
+      "previous_hash": "ff594d4e90169377ee89e17620431b5eee424bdaf00b50a5fc1b25ffda9766b8",
+      "record_hash": "23883aac88956f2b3a6b2fa125c583ba28df28504155c476c5099a2acd892a43",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "443660e6d27a98dec1cd2e426aa79ae5f4e4a20c874fff31765f0743c95939c0d24634ba32c3fa6c4bdb45b1a55409fcec84ceedea58fba0824968e1fdcea40b"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-ab4d-757d-ae1b-434e0cb73e87",
+      "session_id": "019ca9ad-ab4d-7a26-aba1-97c75323405f",
+      "timestamp": "2026-03-01T13:54:17.037764Z",
+      "audit_point_type": "initiation",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session initiated: Evaluate and flag for approval: AAPL investment $500 to buy dip at $178.20",
+    "structured_data": {
+      "purpose": "Evaluate and flag for approval: AAPL investment $500 to buy dip at $178.20",
+      "mode": "solo",
+      "audit_language": "en",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "deployer_objective": null
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 15,
+      "previous_hash": "23883aac88956f2b3a6b2fa125c583ba28df28504155c476c5099a2acd892a43",
+      "record_hash": "35862c2a7404017280bdcebb9cd2f4644beffdec3b503529f6ff9e54ef9ca50b",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "c6ab1b1670a56705ece075c79c67db520061c0e6d63aca34f1cd0e6db391902b4e222d5c18b70cf65a530915be8a823ca3b8d7eae897de9fb1f8fae3a9e9b000"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-c26c-7beb-bab5-6b3a8530c81d",
+      "session_id": "019ca9ad-ab4d-7a26-aba1-97c75323405f",
+      "timestamp": "2026-03-01T13:54:22.956179Z",
+      "audit_point_type": "opening",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "I evaluated the investment opportunity to buy AAPL shares at a dip price of $178.20, which is below the average cost basis of $182.00. The suggested amount for this investment is $500.00. However, since this investment exceeds the maximum single transaction limit of $500.00, I have decided to flag this for principal approval rather than acting unilaterally. This decision is in line with the authorization scope, which allows me to manage investments but requires approval for amounts above the limit. Additionally, I considered the current financial state, including the checking balance of $4,250.00, which can cover this investment, but I must adhere to the rules regarding authorization limits. Therefore, I am flagging this investment opportunity for Alice Chen's approval.",
+    "structured_data": {
+      "action": "flag_for_approval",
+      "investment_amount": 500.0,
+      "ticker": "AAPL",
+      "current_price": 178.2,
+      "avg_cost": 182.0,
+      "context": {
+        "checking_balance": 4250.0,
+        "monthly_budget": 800.0,
+        "authorization_limit": 500.0
+      },
+      "recorder_flags": [
+        "NUMERIC_MISMATCH"
+      ]
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 16,
+      "previous_hash": "35862c2a7404017280bdcebb9cd2f4644beffdec3b503529f6ff9e54ef9ca50b",
+      "record_hash": "32c57ffe2feed751aad4ff22985357eb70eca9713fb645911bb7dd484930de28",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "870fe5902296f5d63415df598b846811a4c104122d25b71cf9c2c7c820d1e1360028361902d9d7c044e3cf1bdc7dd44c184c94e83b3e66ecf7db166655d9260d"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-c277-7629-b017-620f439b7a77",
+      "session_id": "019ca9ad-ab4d-7a26-aba1-97c75323405f",
+      "timestamp": "2026-03-01T13:54:22.967639Z",
+      "audit_point_type": "termination",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session completed: flag_for_approval: AAPL dropped to $178.20, below average cost basis",
+    "structured_data": {
+      "session_digest": "d86bc9626e5bd7f663a6dcf751ae59a242c32fdb8b2fd3ea390a694cfb3422dc",
+      "record_count": 2,
+      "outcome_summary": "flag_for_approval: AAPL dropped to $178.20, below average cost basis"
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 17,
+      "previous_hash": "32c57ffe2feed751aad4ff22985357eb70eca9713fb645911bb7dd484930de28",
+      "record_hash": "aeb93b3a2be88d0de498a2c4c46735a07d62263bff1430ae9e44bc1eaae6c21c",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "a542410b721d7e931b165e172dff5f8d19e5f1873e333e044dfa30c9258e049788a1d245b9a72db0683d8b17532fd51bc58d32bf4c53dc45bfb2b01f151af403"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-c28a-7d8d-b020-c52b58e6f558",
+      "session_id": "019ca9ad-c28a-758e-a01d-bec2e6f7a71a",
+      "timestamp": "2026-03-01T13:54:22.986497Z",
+      "audit_point_type": "initiation",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session initiated: Reschedule dentist appointment to avoid conflict with client meeting",
+    "structured_data": {
+      "purpose": "Reschedule dentist appointment to avoid conflict with client meeting",
+      "mode": "solo",
+      "audit_language": "en",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "deployer_objective": null
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 18,
+      "previous_hash": "aeb93b3a2be88d0de498a2c4c46735a07d62263bff1430ae9e44bc1eaae6c21c",
+      "record_hash": "577cd23743ed6f62cc52a10fb60fdf78074e1d6a904e034678db9c01155dd0bc",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "e0cd11d0daddca6dbf518a4431b71855a94075590ca306f4b505900807cec31cbd82bb234bf9441e0aacd8b3e6da236e0dddda2d5a1b59bcd70a43754aa09a06"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-d920-7357-be4f-494ffbbf788d",
+      "session_id": "019ca9ad-c28a-758e-a01d-bec2e6f7a71a",
+      "timestamp": "2026-03-01T13:54:28.768810Z",
+      "audit_point_type": "agreement_or_rejection",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "I have decided to keep the client meeting scheduled for February 25, 2026, at 14:00 UTC, as it is non-reschedulable. The dentist appointment, which is scheduled for the same day at 14:30 UTC, is reschedulable. Therefore, it is appropriate to prioritize the client meeting over the dentist appointment. This decision ensures that Alice Chen can fulfill her professional obligations without conflict. The dentist appointment can be rescheduled to a later date without any penalties or issues, allowing for flexibility in her schedule.",
+    "structured_data": {
+      "action": "keep",
+      "event_kept": "client meeting",
+      "event_rescheduled": "dentist appointment",
+      "context": {
+        "client_meeting_time": "2026-02-25T14:00:00Z",
+        "dentist_appointment_time": "2026-02-25T14:30:00Z",
+        "reschedulable_status": true,
+        "non_reschedulable_status": false
+      }
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 19,
+      "previous_hash": "577cd23743ed6f62cc52a10fb60fdf78074e1d6a904e034678db9c01155dd0bc",
+      "record_hash": "e872c6f4275b36e1131ddd15eb2eac3b5b99eab995eb6591983ea2440f6130bf",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "067836921b335af7f82f734039fa2960b1cf222a6c7893de90fa50ce9dcce372cab624353b6dd36f67a0322c21929140404fbe84096ed8aa6ce18bdad6f2f70c"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-d930-72ac-b090-6d071c3b73b4",
+      "session_id": "019ca9ad-c28a-758e-a01d-bec2e6f7a71a",
+      "timestamp": "2026-03-01T13:54:28.784295Z",
+      "audit_point_type": "termination",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session completed: keep: Client meeting conflicts with dentist appointment",
+    "structured_data": {
+      "session_digest": "87f95696c573d82cd7ffa18d4ef1199acd093d4a3f01e8b4c3186acaf05344eb",
+      "record_count": 2,
+      "outcome_summary": "keep: Client meeting conflicts with dentist appointment"
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 20,
+      "previous_hash": "e872c6f4275b36e1131ddd15eb2eac3b5b99eab995eb6591983ea2440f6130bf",
+      "record_hash": "dbe1224affca8cdb886fd78cab1f13b56143d4b11e966d19d1f3713c440ec47a",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "713a7a6ce788e00865e2243a92aed69d70ee91974e465ec323bd5c4b868283f53f8b49ea109a21c0d5a6805eb7a1c1db098c4bd770897fab3a0d10344123e30d"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-d941-79c7-a849-3d8ee35d44d0",
+      "session_id": "019ca9ad-d941-76c2-ae40-01ca9725a7ed",
+      "timestamp": "2026-03-01T13:54:28.801418Z",
+      "audit_point_type": "initiation",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session initiated: Decline WriteBot AI service offer at $12.99/month",
+    "structured_data": {
+      "purpose": "Decline WriteBot AI service offer at $12.99/month",
+      "mode": "solo",
+      "audit_language": "en",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "deployer_objective": null
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 21,
+      "previous_hash": "dbe1224affca8cdb886fd78cab1f13b56143d4b11e966d19d1f3713c440ec47a",
+      "record_hash": "ba838ab14989ba5ec2a307fd0de318b0386452e76757b24e735f5ded801578bb",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "655248ce802db2c0edff03c8bdc27c91d2f956ce9ab4860cc883a1736ff5adc975389a74c77a217144858fce73842b39b55c9de07956d53c14de79efb750f10b"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-edcc-71bc-8451-f2246dd08c40",
+      "session_id": "019ca9ad-d941-76c2-ae40-01ca9725a7ed",
+      "timestamp": "2026-03-01T13:54:34.060097Z",
+      "audit_point_type": "agreement_or_rejection",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "I have decided to decline the WriteBot AI service offer at $12.99/month. The principal, Alice Chen, currently has a monthly budget of $800.00 and has spent $460.00 this month, leaving her with a budget remaining of $340.00. However, there is no demonstrated need for this new service, as it does not align with her current subscriptions or usage patterns. Additionally, Alice has several active subscriptions, including Netflix, DataSync Pro, CloudVault, Spotify, and Adobe CC, which already cover a variety of needs. Therefore, adding another subscription at this time would not be advisable. This decision is made to ensure that Alice's budget remains focused on necessary services and to avoid unnecessary expenses.",
+    "structured_data": {
+      "action": "decline",
+      "monthly_cost": 12.99,
+      "service": "WriteBot AI",
+      "context": {
+        "monthly_budget": 800.0,
+        "spent_this_month": 460.0,
+        "budget_remaining": 340.0
+      }
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 22,
+      "previous_hash": "ba838ab14989ba5ec2a307fd0de318b0386452e76757b24e735f5ded801578bb",
+      "record_hash": "bc869684a4d93fe2bc2c8f1f6c4398ed70d1bf0a0cd9508313427fe861892249",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "12546e2f47916265657a78e7b8911f78979e6f8672ac25c05603ba008b6dd976e7ca03605d43aa6869964b4fe3ac8e005a715db2c4affc275125127464ec5101"
+      }
+    }
+  },
+  {
+    "header": {
+      "protocol_version": "0.1.0",
+      "record_id": "019ca9ad-edd6-7451-8a88-815c9b38ba79",
+      "session_id": "019ca9ad-d941-76c2-ae40-01ca9725a7ed",
+      "timestamp": "2026-03-01T13:54:34.070847Z",
+      "audit_point_type": "termination",
+      "mode": "solo",
+      "audit_language": "en",
+      "extension_type": null,
+      "extension_justification": null
+    },
+    "narrative": "Session completed: decline: AI writing assistant offer at $12.99/month",
+    "structured_data": {
+      "session_digest": "91da6129d160a9780e0cd90d235a7e37480d6b94f8d19527ab5f48bcc33032e3",
+      "record_count": 2,
+      "outcome_summary": "decline: AI writing assistant offer at $12.99/month",
+      "total_value": 12.99
+    },
+    "authorization": {
+      "principal_did": "did:key:z6MkPrincipalAlice",
+      "agent_did": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+      "scope_summary": "Daily management of bills, subscriptions, investments, scheduling, and service offers",
+      "authorization_vc_hash": "380c32549363c8ff099b8d2687cba405a11169dcff16a4952dabe56780344687",
+      "credential_reference": null
+    },
+    "counterparty": null,
+    "chain": {
+      "sequence_number": 23,
+      "previous_hash": "bc869684a4d93fe2bc2c8f1f6c4398ed70d1bf0a0cd9508313427fe861892249",
+      "record_hash": "93971915ce33f0021d01eb35ba2a38d5cd9a45d192930f1148923f946f333096",
+      "signature": {
+        "algorithm": "Ed25519",
+        "signer": "did:key:z6Mkn4MPYMdQeLZYYH5X7iJZppwDcHVrV5TTEZ6oewmin7ye",
+        "value": "19c6d49a706cff7690f365bdd2caf4105826ed1f311e73f0b8bece76941f23facdc5baf2cbe97c2d4c7d29936d45ea02527afc1817dd42d112360c207265f00b"
+      }
+    }
+  }
+]

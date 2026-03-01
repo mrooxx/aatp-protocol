@@ -1,37 +1,22 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Package build
-*.egg-info/
-dist/
-build/
-.eggs/
-
-# Virtual environments
-.env
-.venv/
-venv/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Runtime outputs
-*.db
-*.sqlite
-examples/output/
-
-# Keys (never commit)
-*.key
-*.pem
-
-# Test / cache
-.pytest_cache/
-.mypy_cache/
-htmlcov/
-.coverage
+# Python 
+__pycache__/ 
+*.py[cod] 
+*.egg-info/ 
+dist/ 
+build/ 
+.pytest_cache/ 
+ 
+# Environment 
+.env 
+ 
+# IDE 
+.vscode/ 
+.idea/ 
+*.swp 
+ 
+# OS 
+.DS_Store 
+Thumbs.db 
+ 
+# Development notes (local only) 
+Development Notes/ 

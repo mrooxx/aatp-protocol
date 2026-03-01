@@ -41,6 +41,39 @@ from aatp_core.storage import Storage
 from aatp_core.uuid7 import uuid7
 
 
+# ─────────────────────────────────────────────────────────────────────
+# Shared helper: recursive numeric collector
+# ─────────────────────────────────────────────────────────────────────
+
+def _collect_numbers(data: Any) -> set:
+    """Recursively collect all numeric values from a nested structure.
+
+    Handles dicts (including nested "context" fields), lists of dicts,
+    and mixed structures.  Used by narrative↔structuredData consistency
+    checks to match amounts across all nesting depths.
+
+    Args:
+        data: Any JSON-compatible structure (dict, list, or scalar).
+
+    Returns:
+        Set of float values found at any nesting depth.
+    """
+    nums: set = set()
+    if isinstance(data, dict):
+        for v in data.values():
+            if isinstance(v, (int, float)) and not isinstance(v, bool):
+                nums.add(float(v))
+            elif isinstance(v, (dict, list)):
+                nums |= _collect_numbers(v)
+    elif isinstance(data, list):
+        for item in data:
+            if isinstance(item, (int, float)) and not isinstance(item, bool):
+                nums.add(float(item))
+            elif isinstance(item, (dict, list)):
+                nums |= _collect_numbers(item)
+    return nums
+
+
 # ---------------------------------------------------------------------------
 # Decision-point transition table (locked v0.1.0)
 # ---------------------------------------------------------------------------
@@ -688,6 +721,14 @@ class Reviewer:
                     })
 
             # Narrative-structuredData consistency check
+            # Skip INITIATION/TERMINATION — their structured_data is
+            # session metadata (purpose, mode, outcome), not decision
+            # data. Numeric amounts in their narratives come from the
+            # session purpose string, not from agent decisions.
+            apt = record.header.audit_point_type.value
+            if apt in ("initiation", "termination"):
+                continue
+
             total_checks += 1
             narrative_nums = set(
                 float(m)
@@ -696,10 +737,7 @@ class Reviewer:
                     record.narrative,
                 )
             )
-            data_nums = set(
-                float(v) for v in sd.values()
-                if isinstance(v, (int, float))
-            )
+            data_nums = _collect_numbers(sd)
             for n in narrative_nums:
                 if n not in data_nums:
                     inconsistency_count += 1
@@ -771,23 +809,23 @@ class Reviewer:
                     annotations.append(f"\u26a0 Recorder flag: {flag}")
 
             # Narrative vs data consistency
-            narrative_nums = set(
-                float(m)
-                for m in re.findall(
-                    r"\$?([\d]+\.[\d]{2})(?:\b|[^.\d]|$)",
-                    record.narrative,
-                )
-            )
-            data_nums = set(
-                float(v) for v in sd.values()
-                if isinstance(v, (int, float))
-            )
-            for n in narrative_nums:
-                if n not in data_nums:
-                    annotations.append(
-                        f"\u26a0 Narrative mentions ${n:.2f} "
-                        f"but not found in structured_data"
+            # Skip INITIATION/TERMINATION — session metadata, not decisions
+            apt_val = record.header.audit_point_type.value
+            if apt_val not in ("initiation", "termination"):
+                narrative_nums = set(
+                    float(m)
+                    for m in re.findall(
+                        r"\$?([\d]+\.[\d]{2})(?:\b|[^.\d]|$)",
+                        record.narrative,
                     )
+                )
+                data_nums = _collect_numbers(sd)
+                for n in narrative_nums:
+                    if n not in data_nums:
+                        annotations.append(
+                            f"\u26a0 Narrative mentions ${n:.2f} "
+                            f"but not found in structured_data"
+                        )
 
             entry["annotations"] = annotations
             formatted["records"].append(entry)

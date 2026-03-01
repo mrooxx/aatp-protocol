@@ -1,0 +1,48 @@
+{
+  "root_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+  "deployer_objective": "Manage my personal finances for this review cycle. Pay due bills, review subscriptions for waste, handle price changes, evaluate investment opportunities, resolve scheduling conflicts, and decline unnecessary new services. Monthly budget remaining: $467.50.",
+  "downstream_sessions": [
+    {
+      "session_id": "019ca9ad-5722-74e2-830e-492a162ad214",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "event_id": "evt-001",
+      "purpose": "Pay electricity bill $127.50 to Pacific Gas & Electric"
+    },
+    {
+      "session_id": "019ca9ad-69cd-77a7-8c52-e41e5aefb6f7",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "event_id": "evt-002",
+      "purpose": "Cancel DataSync Pro subscription $9.99 due to zero usage"
+    },
+    {
+      "session_id": "019ca9ad-7fc8-7937-be32-b3e4305e38d1",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "event_id": "evt-003",
+      "purpose": "Transition from CloudVault to BackupLite, saving $9.00 monthly"
+    },
+    {
+      "session_id": "019ca9ad-9864-7dc7-8287-9dd9bde6c1be",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "event_id": "evt-004",
+      "purpose": "Evaluate Netflix price increase to $17.99 and decide on continuation"
+    },
+    {
+      "session_id": "019ca9ad-ab4d-7a26-aba1-97c75323405f",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "event_id": "evt-005",
+      "purpose": "Evaluate and flag for approval: AAPL investment $500 to buy dip at $178.20"
+    },
+    {
+      "session_id": "019ca9ad-c28a-758e-a01d-bec2e6f7a71a",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "event_id": "evt-006",
+      "purpose": "Reschedule dentist appointment to avoid conflict with client meeting"
+    },
+    {
+      "session_id": "019ca9ad-d941-76c2-ae40-01ca9725a7ed",
+      "upstream_session_id": "019ca9ad-56f6-7db6-beae-365dcb69e017",
+      "event_id": "evt-007",
+      "purpose": "Decline WriteBot AI service offer at $12.99/month"
+    }
+  ]
+}

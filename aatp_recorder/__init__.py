@@ -41,6 +41,40 @@ from aatp_core.session import AuditSession, SessionState
 from aatp_core.storage import Storage
 
 
+# ─────────────────────────────────────────────────────────────────────
+# Shared helper: recursive numeric collector
+# ─────────────────────────────────────────────────────────────────────
+
+def _collect_numbers(data: Any) -> set:
+    """Recursively collect all numeric values from a nested structure.
+
+    Handles dicts (including nested "context" fields), lists of dicts,
+    and mixed structures.  Used by both Recorder (non-blocking flag)
+    and Reviewer (L2 conformance check) to match narrative amounts
+    against all numbers in structured_data.
+
+    Args:
+        data: Any JSON-compatible structure (dict, list, or scalar).
+
+    Returns:
+        Set of float values found at any nesting depth.
+    """
+    nums: set = set()
+    if isinstance(data, dict):
+        for v in data.values():
+            if isinstance(v, (int, float)) and not isinstance(v, bool):
+                nums.add(float(v))
+            elif isinstance(v, (dict, list)):
+                nums |= _collect_numbers(v)
+    elif isinstance(data, list):
+        for item in data:
+            if isinstance(item, (int, float)) and not isinstance(item, bool):
+                nums.add(float(item))
+            elif isinstance(item, (dict, list)):
+                nums |= _collect_numbers(item)
+    return nums
+
+
 class Recorder:
     """AATP Recorder — creates, seals, and persists audit records.
 
@@ -195,11 +229,9 @@ class Recorder:
         if not narrative_numbers:
             return flags
 
-        # Collect numeric values from structured_data (flat scan)
-        data_numbers: set = set()
-        for v in structured_data.values():
-            if isinstance(v, (int, float)):
-                data_numbers.add(float(v))
+        # Collect numeric values from structured_data (recursive scan)
+        # Handles nested dicts (e.g. "context" field) and lists
+        data_numbers = _collect_numbers(structured_data)
 
         # Check if narrative amounts appear in structured_data
         for n in narrative_numbers:
@@ -219,6 +251,7 @@ class Recorder:
         mode: str = "solo",
         counterparty_did: Optional[str] = None,
         counterparty_ref: Optional[str] = None,
+        initiation_extra: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """Start a new audit session.
 
@@ -230,6 +263,12 @@ class Recorder:
             mode:             "solo", "unilateral", or "bilateral".
             counterparty_did: Counterparty DID (required for bilateral).
             counterparty_ref: Counterparty reference (fallback identifier).
+            initiation_extra: Optional dict of additional fields to merge
+                              into the INITIATION record's structured_data.
+                              Used by purpose chain to inject
+                              upstream_session_id and deployer_objective.
+                              Does not override core fields (purpose, mode,
+                              audit_language).
 
         Returns:
             Dict with session_id, record_id, sequence_number, record_hash.
@@ -246,16 +285,24 @@ class Recorder:
 
         # Create session — INITIATION is auto-sealed using current
         # global chain position
+        initiation_data = {
+            "purpose": purpose,
+            "mode": mode,
+            "audit_language": self.audit_language,
+        }
+        if initiation_extra:
+            # Merge extra fields; core fields (purpose, mode,
+            # audit_language) are not overridden.
+            for key, value in initiation_extra.items():
+                if key not in initiation_data:
+                    initiation_data[key] = value
+
         session = AuditSession(
             mode=op_mode,
             authorization=self._make_authorization(),
             private_key=self.private_key,
             initiation_narrative=f"Session initiated: {purpose}",
-            initiation_data={
-                "purpose": purpose,
-                "mode": mode,
-                "audit_language": self.audit_language,
-            },
+            initiation_data=initiation_data,
             counterparty=counterparty,
             previous_hash=self._previous_hash,
             sequence_start=self._next_sequence,

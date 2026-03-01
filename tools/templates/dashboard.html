@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AATP Debug Dashboard</title>
+<style>
+/* ── Reset & Base ────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0e1117;
+  --bg-card: #161b22;
+  --bg-card-hover: #1c2333;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-dim: #8b949e;
+  --text-bright: #f0f6fc;
+  --accent: #58a6ff;
+  --accent-dim: #1f6feb;
+  --green: #3fb950;
+  --green-dim: #238636;
+  --red: #f85149;
+  --red-dim: #da3633;
+  --yellow: #d29922;
+  --orange: #db6d28;
+  --purple: #bc8cff;
+  --mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --radius: 6px;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── Header ──────────────────────────────────────────── */
+.header {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header h1 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-bright);
+  letter-spacing: -0.3px;
+}
+
+.header .tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-family: var(--mono);
+}
+
+.tag-pass { background: var(--green-dim); color: var(--green); }
+.tag-fail { background: var(--red-dim); color: #ffa198; }
+.tag-warn { background: #3d2d00; color: var(--yellow); }
+
+.header-stats {
+  margin-left: auto;
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.header-stats strong {
+  color: var(--text);
+  font-family: var(--mono);
+}
+
+/* ── Tabs ────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+
+.tab {
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── Content ─────────────────────────────────────────── */
+.content {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── Cards ───────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.card-body { padding: 16px; }
+
+/* ── Purpose Tree ────────────────────────────────────── */
+.tree-node {
+  margin-left: 0;
+  margin-bottom: 8px;
+}
+
+.tree-node .tree-children {
+  margin-left: 28px;
+  border-left: 2px solid var(--border);
+  padding-left: 16px;
+}
+
+.tree-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.tree-item:hover { border-color: var(--accent-dim); }
+
+.tree-item-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.tree-item-header .session-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  background: rgba(88,166,255,0.1);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.tree-item-header .apt-badge {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: var(--mono);
+  background: rgba(188,140,255,0.15);
+  color: var(--purple);
+}
+
+.tree-item .purpose {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.tree-item .outcome {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.tree-item .record-count {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+
+/* ── Decision Cards ──────────────────────────────────── */
+.decision-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.decision-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.decision-header:hover { background: var(--bg-card-hover); }
+
+.decision-header .event-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-bright);
+  min-width: 120px;
+}
+
+.decision-header .action-badge {
+  font-size: 11px;
+  font-family: var(--mono);
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--green-dim);
+  color: var(--green);
+}
+
+.decision-header .purpose-text {
+  font-size: 12px;
+  color: var(--text-dim);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.decision-header .token-info {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text-dim);
+}
+
+.decision-body {
+  display: none;
+  padding: 16px;
+}
+
+.decision-body.open { display: block; }
+
+.decision-section {
+  margin-bottom: 16px;
+}
+
+.decision-section h4 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+
+.narrative-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--accent-dim);
+}
+
+.data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.data-panel {
+  background: rgba(255,255,255,0.02);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+}
+
+.data-panel h5 {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* ── JSON viewer ─────────────────────────────────────── */
+pre.json-view {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text);
+  background: rgba(0,0,0,0.3);
+  padding: 10px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.json-key { color: var(--accent); }
+.json-string { color: var(--green); }
+.json-number { color: var(--orange); }
+.json-bool { color: var(--purple); }
+.json-null { color: var(--text-dim); }
+
+/* ── Audit Scores ────────────────────────────────────── */
+.scores-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.score-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+}
+
+.score-card .score-value {
+  font-size: 36px;
+  font-weight: 700;
+  font-family: var(--mono);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.score-card .score-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+}
+
+.score-high { color: var(--green); }
+.score-mid { color: var(--yellow); }
+.score-low { color: var(--red); }
+
+/* ── Findings List ───────────────────────────────────── */
+.finding-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.finding-item:last-child { border-bottom: none; }
+
+.severity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.severity-critical { background: var(--red); }
+.severity-warning { background: var(--yellow); }
+.severity-info { background: var(--accent); }
+
+.finding-text { font-size: 13px; color: var(--text); flex: 1; }
+.finding-rec {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* ── Debug: Sequence Map ─────────────────────────────── */
+.seq-map {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-bottom: 16px;
+}
+
+.seq-block {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-family: var(--mono);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s;
+  position: relative;
+}
+
+.seq-block:hover {
+  transform: scale(1.3);
+  z-index: 10;
+}
+
+.seq-init { background: var(--accent-dim); color: var(--accent); }
+.seq-term { background: #2d1f3d; color: var(--purple); }
+.seq-biz { background: var(--green-dim); color: var(--green); }
+.seq-broken { background: var(--red-dim); color: var(--red); outline: 2px solid var(--red); }
+
+/* ── Tooltip ─────────────────────────────────────────── */
+.tooltip {
+  display: none;
+  position: fixed;
+  background: #1c2333;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 12px;
+  z-index: 1000;
+  max-width: 400px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+
+.tooltip.visible { display: block; }
+
+.tooltip-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.tooltip-label {
+  color: var(--text-dim);
+  min-width: 60px;
+}
+
+.tooltip-value {
+  color: var(--text);
+  font-family: var(--mono);
+  word-break: break-all;
+}
+
+/* ── Chain Table ──────────────────────────────────────── */
+.chain-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.chain-table th {
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg-card);
+}
+
+.chain-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(48,54,61,0.5);
+  font-family: var(--mono);
+  color: var(--text);
+}
+
+.chain-table tr:hover td { background: var(--bg-card-hover); }
+
+.hash-cell {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.hash-cell:hover { color: var(--accent); }
+
+/* ── L1/L2 status badges ────────────────────────────── */
+.status-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.status-icon { font-size: 14px; }
+
+/* ── Loading ─────────────────────────────────────────── */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Token Bar Chart ─────────────────────────────────── */
+.token-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.token-bar-label {
+  min-width: 140px;
+  color: var(--text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.token-bar-track {
+  flex: 1;
+  height: 18px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+}
+
+.token-bar-prompt {
+  height: 100%;
+  background: var(--accent-dim);
+  transition: width 0.4s ease;
+}
+
+.token-bar-completion {
+  height: 100%;
+  background: var(--green-dim);
+  transition: width 0.4s ease;
+}
+
+.token-bar-value {
+  min-width: 60px;
+  text-align: right;
+  font-family: var(--mono);
+  color: var(--text);
+}
+</style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────── -->
+<div class="header">
+  <h1>AATP Debug Dashboard</h1>
+  <span class="tag" id="chainStatus">...</span>
+  <div class="header-stats">
+    <span>Records: <strong id="statRecords">-</strong></span>
+    <span>Sessions: <strong id="statSessions">-</strong></span>
+    <span>Tokens: <strong id="statTokens">-</strong></span>
+    <span>API Calls: <strong id="statCalls">-</strong></span>
+  </div>
+</div>
+
+<!-- ── Tabs ────────────────────────────────────────── -->
+<div class="tabs">
+  <div class="tab active" data-tab="chain">Chain</div>
+  <div class="tab" data-tab="decisions">Decisions</div>
+  <div class="tab" data-tab="audit">Audit</div>
+  <div class="tab" data-tab="debug">Debug</div>
+</div>
+
+<!-- ── Content ─────────────────────────────────────── -->
+<div class="content">
+
+  <!-- TAB: Chain -->
+  <div class="tab-panel active" id="panel-chain">
+    <div class="loading"><span class="spinner"></span>Loading chain data...</div>
+  </div>
+
+  <!-- TAB: Decisions -->
+  <div class="tab-panel" id="panel-decisions">
+    <div class="loading"><span class="spinner"></span>Loading decisions...</div>
+  </div>
+
+  <!-- TAB: Audit -->
+  <div class="tab-panel" id="panel-audit">
+    <div class="loading"><span class="spinner"></span>Loading audit report...</div>
+  </div>
+
+  <!-- TAB: Debug -->
+  <div class="tab-panel" id="panel-debug">
+    <div class="loading"><span class="spinner"></span>Loading debug data...</div>
+  </div>
+
+</div>
+
+<!-- ── Tooltip ─────────────────────────────────────── -->
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// AATP Dashboard — Client Logic
+// ═══════════════════════════════════════════════════════════
+
+// ── Tab switching ────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Helpers ──────────────────────────────────────────────
+function scoreClass(v) {
+  if (v >= 80) return 'score-high';
+  if (v >= 50) return 'score-mid';
+  return 'score-low';
+}
+
+function syntaxHighlight(json) {
+  if (typeof json !== 'string') json = JSON.stringify(json, null, 2);
+  json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return json.replace(
+    /("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?|\bnull\b)/g,
+    function (match) {
+      let cls = 'json-number';
+      if (/^"/.test(match)) {
+        cls = /:$/.test(match) ? 'json-key' : 'json-string';
+      } else if (/true|false/.test(match)) {
+        cls = 'json-bool';
+      } else if (/null/.test(match)) {
+        cls = 'json-null';
+      }
+      return '<span class="' + cls + '">' + match + '</span>';
+    }
+  );
+}
+
+function truncHash(h) {
+  if (!h) return 'null';
+  return h.substring(0, 12) + '...';
+}
+
+// ── Data fetch ───────────────────────────────────────────
+async function fetchJSON(url) {
+  const res = await fetch(url);
+  if (!res.ok) return null;
+  return res.json();
+}
+
+// ── Overview / Header ────────────────────────────────────
+async function loadOverview() {
+  const data = await fetchJSON('/api/overview');
+  if (!data) return;
+
+  document.getElementById('statRecords').textContent = data.total_records;
+  document.getElementById('statSessions').textContent = data.total_sessions;
+  document.getElementById('statTokens').textContent = data.token_summary?.total_tokens?.toLocaleString() || '-';
+  document.getElementById('statCalls').textContent = data.token_summary?.total_calls || '-';
+
+  const badge = document.getElementById('chainStatus');
+  if (data.chain_valid) {
+    badge.textContent = 'L1 PASS';
+    badge.className = 'tag tag-pass';
+  } else {
+    badge.textContent = 'L1 FAIL';
+    badge.className = 'tag tag-fail';
+  }
+}
+
+// ── Chain Tab ────────────────────────────────────────────
+async function loadChain() {
+  const panel = document.getElementById('panel-chain');
+  const data = await fetchJSON('/api/chain');
+  if (!data || !data.roots || data.roots.length === 0) {
+    panel.innerHTML = '<div class="card"><div class="card-body">No chain data available.</div></div>';
+    return;
+  }
+
+  function renderNode(node, isRoot) {
+    const decision = node.decision;
+    const aptBadge = decision
+      ? `<span class="apt-badge">${decision.audit_point_type}</span>`
+      : '';
+    const actionBadge = decision && decision.action
+      ? `<span class="apt-badge" style="background:rgba(63,185,80,0.15);color:var(--green)">${decision.action}</span>`
+      : '';
+
+    let childrenHtml = '';
+    if (node.children && node.children.length > 0) {
+      childrenHtml = '<div class="tree-children">';
+      for (const child of node.children) {
+        childrenHtml += renderNode(child, false);
+      }
+      childrenHtml += '</div>';
+    }
+
+    return `
+      <div class="tree-node">
+        <div class="tree-item" onclick="toggleTreeDetail(this)">
+          <div class="tree-item-header">
+            <span class="session-label">${isRoot ? 'ROOT' : node.session_id.substring(0, 13)}</span>
+            ${aptBadge}
+            ${actionBadge}
+            <span class="record-count">${node.record_count} records</span>
+          </div>
+          <div class="purpose">${escapeHtml(node.purpose || 'No purpose')}</div>
+          ${node.outcome_summary ? '<div class="outcome">' + escapeHtml(node.outcome_summary) + '</div>' : ''}
+        </div>
+        ${childrenHtml}
+      </div>
+    `;
+  }
+
+  let html = `<div style="margin-bottom:12px;font-size:13px;color:var(--text-dim)">
+    ${data.total_sessions} sessions total — click any node to see details
+  </div>`;
+
+  for (const root of data.roots) {
+    html += renderNode(root, true);
+  }
+
+  panel.innerHTML = html;
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function toggleTreeDetail(el) {
+  el.style.borderColor = el.style.borderColor === 'var(--accent)' ? '' : 'var(--accent)';
+}
+
+// ── Decisions Tab ────────────────────────────────────────
+async function loadDecisions() {
+  const panel = document.getElementById('panel-decisions');
+  const decisions = await fetchJSON('/api/decisions');
+  if (!decisions || decisions.length === 0) {
+    panel.innerHTML = '<div class="card"><div class="card-body">No decisions found.</div></div>';
+    return;
+  }
+
+  let html = '';
+  for (let i = 0; i < decisions.length; i++) {
+    const d = decisions[i];
+    const sd = d.structured_data || {};
+    const ctx = sd.context || {};
+    const action = sd.action || d.audit_point_type;
+    const tokens = d.llm_usage?.total_tokens;
+
+    // Separate context from decision data
+    const decisionData = {};
+    const contextData = {};
+    for (const [k, v] of Object.entries(sd)) {
+      if (k === 'context') {
+        Object.assign(contextData, v);
+      } else if (k !== 'recorder_flags') {
+        decisionData[k] = v;
+      }
+    }
+
+    html += `
+      <div class="decision-card">
+        <div class="decision-header" onclick="toggleDecision(${i})">
+          <span class="event-label">S${i + 1}: ${escapeHtml(d.audit_point_type)}</span>
+          <span class="action-badge">${escapeHtml(action)}</span>
+          <span class="purpose-text">${escapeHtml(d.session_purpose || '')}</span>
+          ${tokens ? `<span class="token-info">${tokens} tok</span>` : ''}
+        </div>
+        <div class="decision-body" id="decision-body-${i}">
+          <div class="decision-section">
+            <h4>Narrative</h4>
+            <div class="narrative-text">${escapeHtml(d.narrative)}</div>
+          </div>
+          <div class="decision-section">
+            <h4>Structured Data</h4>
+            <div class="data-grid">
+              <div class="data-panel">
+                <h5>Decision Fields</h5>
+                <pre class="json-view">${syntaxHighlight(decisionData)}</pre>
+              </div>
+              <div class="data-panel">
+                <h5>Context (World State References)</h5>
+                <pre class="json-view">${Object.keys(contextData).length > 0 ? syntaxHighlight(contextData) : '<span class="json-null">No context data</span>'}</pre>
+              </div>
+            </div>
+          </div>
+          <div class="decision-section" style="display:flex;gap:16px;font-size:12px;color:var(--text-dim)">
+            <span>Seq: <strong style="color:var(--text);font-family:var(--mono)">${d.sequence_number}</strong></span>
+            <span>Model: <strong style="color:var(--text);font-family:var(--mono)">${escapeHtml(d.llm_model || 'N/A')}</strong></span>
+            <span>Time: <strong style="color:var(--text);font-family:var(--mono)">${d.timestamp?.substring(11, 19) || ''}</strong></span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  panel.innerHTML = html;
+}
+
+function toggleDecision(i) {
+  const body = document.getElementById('decision-body-' + i);
+  body.classList.toggle('open');
+}
+
+// ── Audit Tab ────────────────────────────────────────────
+async function loadAudit() {
+  const panel = document.getElementById('panel-audit');
+  const report = await fetchJSON('/api/audit');
+  if (!report) {
+    panel.innerHTML = '<div class="card"><div class="card-body">No audit report found. Run demo_solo_audit_llm.py to generate one.</div></div>';
+    return;
+  }
+
+  const scores = report.l3_scores || {};
+
+  // L1/L2 status
+  let html = `<div class="status-row">
+    <div class="status-badge">
+      <span class="status-icon">${report.l1_chain_valid ? '✅' : '❌'}</span>
+      L1 Chain Integrity
+    </div>
+    <div class="status-badge">
+      <span class="status-icon">${report.l1_transitions_valid ? '✅' : '⚠️'}</span>
+      L1 Transitions
+    </div>
+    <div class="status-badge">
+      <span class="status-icon">${report.l2_vc_hash_match ? '✅' : '❌'}</span>
+      L2 VC Hash
+    </div>
+    <div class="status-badge">
+      <span class="status-icon">${report.l2_within_scope ? '✅' : '❌'}</span>
+      L2 Scope
+    </div>
+    <div class="status-badge">
+      <span class="status-icon">${report.l2_within_limits ? '✅' : '❌'}</span>
+      L2 Limits
+    </div>
+  </div>`;
+
+  // Scores
+  html += '<div class="scores-grid">';
+  for (const [label, key] of [['Overall', 'overall'], ['Integrity', 'integrity'], ['Conformance', 'conformance'], ['Reasonableness', 'reasonableness']]) {
+    const v = scores[key] ?? '-';
+    const cls = typeof v === 'number' ? scoreClass(v) : '';
+    html += `<div class="score-card">
+      <div class="score-value ${cls}">${v}</div>
+      <div class="score-label">${label}</div>
+    </div>`;
+  }
+  html += '</div>';
+
+  // Findings
+  const findings = report.l3_findings || [];
+  if (findings.length > 0) {
+    html += '<div class="card"><div class="card-header">Findings (' + findings.length + ')</div>';
+    for (const f of findings) {
+      html += `<div class="finding-item">
+        <div class="severity-dot severity-${f.severity}"></div>
+        <div>
+          <div class="finding-text">${escapeHtml(f.finding)}</div>
+          ${f.recommendation ? '<div class="finding-rec">→ ' + escapeHtml(f.recommendation) + '</div>' : ''}
+          <div class="finding-rec" style="font-family:var(--mono);font-size:11px;margin-top:2px">
+            ${(f.record_refs || []).map(r => r.substring(0, 13) + '...').join(', ')}
+          </div>
+        </div>
+      </div>`;
+    }
+    html += '</div>';
+  }
+
+  // Recommendations
+  const recs = report.l3_recommendations || [];
+  if (recs.length > 0) {
+    html += '<div class="card"><div class="card-header">Recommendations</div><div class="card-body">';
+    for (const r of recs) {
+      html += `<div style="font-size:13px;margin-bottom:8px;padding-left:12px;border-left:2px solid var(--yellow)">${escapeHtml(r)}</div>`;
+    }
+    html += '</div></div>';
+  }
+
+  // Raw IDs
+  html += `<div class="card"><div class="card-header">Identifiers</div><div class="card-body">
+    <div style="font-size:12px;font-family:var(--mono);display:grid;grid-template-columns:120px 1fr;gap:4px 12px">
+      <span style="color:var(--text-dim)">Agent DID</span><span>${escapeHtml(report.agent_did || '')}</span>
+      <span style="color:var(--text-dim)">Auditor DID</span><span>${escapeHtml(report.auditor_did || '')}</span>
+      <span style="color:var(--text-dim)">Review ID</span><span>${escapeHtml(report.review_id || '')}</span>
+      <span style="color:var(--text-dim)">Review Hash</span><span>${escapeHtml(report.review_hash || '')}</span>
+    </div>
+  </div></div>`;
+
+  panel.innerHTML = html;
+}
+
+// ── Debug Tab ────────────────────────────────────────────
+async function loadDebug() {
+  const panel = document.getElementById('panel-debug');
+  const [debug, tokens] = await Promise.all([
+    fetchJSON('/api/debug'),
+    fetchJSON('/api/tokens'),
+  ]);
+
+  if (!debug) {
+    panel.innerHTML = '<div class="card"><div class="card-body">No debug data available.</div></div>';
+    return;
+  }
+
+  const cv = debug.chain_verification;
+  const seq = debug.sequence_map;
+
+  // Chain verification summary
+  let html = `<div class="card">
+    <div class="card-header">
+      ${cv.chain_valid ? '✅' : '❌'}
+      Chain Verification — ${cv.total_records} records
+    </div>
+    <div class="card-body">
+      <div style="display:flex;gap:24px;font-size:13px;margin-bottom:12px">
+        <span>Sequence gaps: <strong style="font-family:var(--mono);color:${cv.sequence_gaps.length ? 'var(--red)' : 'var(--green)'}">${cv.sequence_gaps.length}</strong></span>
+        <span>Hash breaks: <strong style="font-family:var(--mono);color:${cv.hash_breaks.length ? 'var(--red)' : 'var(--green)'}">${cv.hash_breaks.length}</strong></span>
+      </div>`;
+
+  // Sequence map visualization
+  html += '<h4 style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-dim);margin-bottom:8px">Sequence Map</h4>';
+  html += '<div class="seq-map">';
+  for (const s of seq) {
+    let cls = 'seq-biz';
+    if (s.type === 'initiation') cls = 'seq-init';
+    else if (s.type === 'termination') cls = 'seq-term';
+    if (!s.linked) cls = 'seq-broken';
+
+    html += `<div class="seq-block ${cls}"
+      onmouseenter="showSeqTooltip(event, ${JSON.stringify(s).replace(/"/g, '&quot;')})"
+      onmouseleave="hideTooltip()">${s.seq}</div>`;
+  }
+  html += '</div>';
+
+  // Legend
+  html += `<div style="display:flex;gap:16px;font-size:11px;color:var(--text-dim);margin-bottom:16px">
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--accent-dim);vertical-align:middle"></span> INITIATION</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--green-dim);vertical-align:middle"></span> Business</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#2d1f3d;vertical-align:middle"></span> TERMINATION</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--red-dim);outline:2px solid var(--red);vertical-align:middle"></span> Broken link</span>
+  </div>`;
+
+  html += '</div></div>';
+
+  // Chain table
+  html += `<div class="card">
+    <div class="card-header">Hash Chain Detail</div>
+    <div class="card-body" style="max-height:500px;overflow-y:auto">
+      <table class="chain-table">
+        <thead><tr>
+          <th>Seq</th><th>Session</th><th>Type</th><th>Record Hash</th><th>Prev Hash</th><th>Link</th>
+        </tr></thead>
+        <tbody>`;
+
+  for (const s of seq) {
+    const linkIcon = s.linked ? '🔗' : '💔';
+    html += `<tr>
+      <td>${s.seq}</td>
+      <td title="${s.session_id_full}">${s.session_id}</td>
+      <td>${s.type}</td>
+      <td class="hash-cell" title="${s.record_hash}">${s.record_hash_short}</td>
+      <td class="hash-cell" title="${s.prev_hash || 'null'}">${s.prev_hash_short}</td>
+      <td>${linkIcon}</td>
+    </tr>`;
+  }
+
+  html += '</tbody></table></div></div>';
+
+  // Token usage chart
+  if (tokens && tokens.calls) {
+    const maxTok = Math.max(...tokens.calls.map(c => c.total_tokens));
+
+    html += `<div class="card">
+      <div class="card-header">Token Usage — ${tokens.total_tokens.toLocaleString()} total</div>
+      <div class="card-body">
+        <div style="display:flex;gap:16px;margin-bottom:12px;font-size:12px;color:var(--text-dim)">
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--accent-dim);vertical-align:middle"></span> Prompt</span>
+          <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--green-dim);vertical-align:middle"></span> Completion</span>
+        </div>`;
+
+    for (const c of tokens.calls) {
+      const label = c.call_type === 'root_plan' ? 'Root Plan' : (c.event_id || c.call_type);
+      const pW = (c.prompt_tokens / maxTok * 100).toFixed(1);
+      const cW = (c.completion_tokens / maxTok * 100).toFixed(1);
+
+      html += `<div class="token-bar-row">
+        <span class="token-bar-label" title="${escapeHtml(c.session_purpose || '')}">${escapeHtml(label)}</span>
+        <div class="token-bar-track">
+          <div class="token-bar-prompt" style="width:${pW}%"></div>
+          <div class="token-bar-completion" style="width:${cW}%"></div>
+        </div>
+        <span class="token-bar-value">${c.total_tokens}</span>
+      </div>`;
+    }
+
+    html += '</div></div>';
+  }
+
+  panel.innerHTML = html;
+}
+
+// ── Tooltip for sequence blocks ──────────────────────────
+function showSeqTooltip(event, data) {
+  const tip = document.getElementById('tooltip');
+  tip.innerHTML = `
+    <div class="tooltip-row"><span class="tooltip-label">Seq</span><span class="tooltip-value">${data.seq}</span></div>
+    <div class="tooltip-row"><span class="tooltip-label">Type</span><span class="tooltip-value">${data.type}</span></div>
+    <div class="tooltip-row"><span class="tooltip-label">Session</span><span class="tooltip-value">${data.session_id_full}</span></div>
+    <div class="tooltip-row"><span class="tooltip-label">Hash</span><span class="tooltip-value">${data.record_hash}</span></div>
+    <div class="tooltip-row"><span class="tooltip-label">Prev</span><span class="tooltip-value">${data.prev_hash || 'null'}</span></div>
+    <div class="tooltip-row"><span class="tooltip-label">Linked</span><span class="tooltip-value">${data.linked ? '✅ Yes' : '❌ BROKEN'}</span></div>
+  `;
+  tip.style.left = event.clientX + 12 + 'px';
+  tip.style.top = event.clientY + 12 + 'px';
+  tip.classList.add('visible');
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip').classList.remove('visible');
+}
+
+// ── Init ─────────────────────────────────────────────────
+async function init() {
+  await loadOverview();
+  // Load all tabs in parallel
+  await Promise.all([loadChain(), loadDecisions(), loadAudit(), loadDebug()]);
+}
+
+init();
+</script>
+</body>
+</html>

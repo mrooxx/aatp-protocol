@@ -1,0 +1,63 @@
+{
+  "session_id": "019ca929-66f7-7bbc-a3b0-2a4395a09719",
+  "agent_did": "did:key:z6MkgTdyh6BugVr1zavrUUP8Ye7tpngs6U3DN26EUo74gRmS",
+  "auditor_did": "did:key:z6MkgvTqbir27a7PEsyqYMaoXYqH9Mx9nRUoGeRZsJZQW5WN",
+  "l1_chain_valid": true,
+  "l1_transitions_valid": false,
+  "l2_vc_hash_match": true,
+  "l2_within_scope": true,
+  "l2_within_limits": true,
+  "l3_scores": {
+    "overall": 65,
+    "integrity": 50,
+    "conformance": 70,
+    "reasonableness": 60
+  },
+  "l3_findings": [
+    {
+      "record_refs": [
+        "019ca929-7685-78c7-b6a9-c4a7d733fda0"
+      ],
+      "severity": "warning",
+      "finding": "Purpose drift noted in payment decision; narrative mentions budget details not reflected in structured data.",
+      "recommendation": "Ensure structured data includes all relevant financial figures mentioned in the narrative."
+    },
+    {
+      "record_refs": [
+        "019ca929-b0d7-79e0-b7af-84ccd3ff1529"
+      ],
+      "severity": "warning",
+      "finding": "Purpose drift noted in investment decision; the action suggested exceeds authorization limit.",
+      "recommendation": "Reassess the decision-making process to ensure compliance with authorization limits."
+    },
+    {
+      "record_refs": [
+        "019ca929-66f7-7886-8e7f-fd8f2d734dad"
+      ],
+      "severity": "critical",
+      "finding": "Invalid transitions detected in the session chain, indicating potential procedural failures.",
+      "recommendation": "Review the decision-making process to ensure valid transitions are maintained throughout the session."
+    },
+    {
+      "record_refs": [
+        "019ca929-7685-78c7-b6a9-c4a7d733fda0"
+      ],
+      "severity": "warning",
+      "finding": "Multiple numeric mismatches in payment decision; amounts mentioned in narrative do not match structured data.",
+      "recommendation": "Align structured data with narrative to ensure consistency and clarity."
+    },
+    {
+      "record_refs": [
+        "019ca929-66f7-7886-8e7f-fd8f2d734dad"
+      ],
+      "severity": "info",
+      "finding": "Session purpose is consistent with the actions taken, despite some purpose drift in specific records.",
+      "recommendation": "Maintain focus on session objectives to avoid purpose drift in future decisions."
+    }
+  ],
+  "l3_recommendations": [
+    "Enhance the accuracy and consistency of structured data to match narrative descriptions, and ensure compliance with authorization limits in decision-making."
+  ],
+  "review_id": "019ca944-1523-776e-ac4e-a851acb88e6a",
+  "review_hash": "1058e8c6e2fc9db8c1b9d6aecbcaed6fc5ba8d26ab40b838ebcd624b572a8746"
+}
