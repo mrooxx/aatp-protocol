@@ -2,7 +2,7 @@
 
 **Current phase: v0.x — Founder Stewardship**
 
-This roadmap describes the planned development of AATP's reference implementation and supporting tools. The Conceptual Framework (v0.44) and Governance Addendum (v0.21) are complete and stable. What follows is the path from specification to working code.
+This roadmap describes the planned development of AATP's reference implementation and supporting tools. The Conceptual Framework (v0.45 — descriptive; v0.44 retained as snapshot) and Governance Addendum (v0.21) are complete and stable. v0.45 accepts an optional Profile layer — ACP, LAEP, a Finance sketch (in `docs/profiles/`) and a non-normative Operating-Cost report — distilled from the first landing application and folded upstream; no Core Invariant changed. What follows is the path from specification to working code.
 
 AATP follows a "can run before can promote" philosophy: no public outreach until there is executable code that anyone can clone, run, and see results from.
 
@@ -71,7 +71,7 @@ python -m tools.aatp_cli view examples/output/trail.json
 
 ## 🔮 Future
 
-- Merkle tree anchoring — periodic publication of chain summaries to external registries (blockchain or timestamp authority) for third-party-verifiable tamper evidence. Optional in v0.x; scope and mandatory status to be determined based on implementation experience.
+- ~~Merkle tree anchoring — scope and mandatory status to be determined based on implementation experience.~~ **Addressed in v0.45 by the LAEP profile** (`docs/profiles/AATP-LAEP-Profile-v0.1.md`): anchoring is optional in v0.x and carrier-neutral; the anchored records form their own sealed chain; proven on a public testnet (LAEP §11). Merkle *batching* at scale is specified (LAEP §5.3) but not yet run end-to-end.
 - Threat model document — formal analysis of replay attacks, key rotation, storage corruption, clock manipulation, and other protocol-level security concerns
 - `pip install aatp` — PyPI package (after API stabilization)
 - MCP Tool Server — wrap Recorder and Reviewer as standard MCP tools
